@@ -9,11 +9,13 @@ document.getElementById("weeklyBread").addEventListener("click", function(){
     for (verse of verseArray){
         console.log(verse)
     }
-    const mode = "weekly"
-    retrieveData("mode")
+    retrieveData()
 })
 
-function retrieveData(mode) {
+document.getElementById("totalVerses").addEventListener("click", function () {
+    retrieveAllVerses()
+})
+function retrieveData() {
     const token = 'patVda4XZrXZ0bO0K.288e91a938d45dbb9d4bc4d9908ce7da2e8e93d55b53b04b3d74e7afcc534abd';
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
@@ -49,7 +51,7 @@ function retrieveData(mode) {
                 else {
                    verseCount = getVerseCount(data.records[i].fields["Days reporting"]) 
                 }
-                li.textContent = data.records[i].fields.Name + (data.records[i].fields["I completed every chapter this week"] == undefined ? "" : " Completed all chapters")
+                li.textContent = data.records[i].fields.Name + (data.records[i].fields["I completed every chapter this week"] == undefined ? "" : " completed all chapters")
                                 + ": read " + verseCount + " verses"
                 ul.appendChild(li)
                 console.log(data.records[i].fields)
@@ -109,4 +111,41 @@ function getVerseCount(array){
         
     }
     return count
+}
+
+
+function retrieveAllVerses(){
+    const token = 'patVda4XZrXZ0bO0K.288e91a938d45dbb9d4bc4d9908ce7da2e8e93d55b53b04b3d74e7afcc534abd';
+    const baseId = 'appV7WLGs7utmV0m8';
+    const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
+
+    const ul = document.getElementById("output")
+    const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
+
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    }
+
+    fetch(url, { headers })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the data returned by Airtable
+            //console.log(data.records[0].fields.Name)
+            /*
+            let verseCount = 0
+            const li = document.createElement('li');
+
+            for (let i = 0; i < data.records.length; i++) {
+                for (let i = 0; i<data.records.length;i++){
+                    verseCount += parseInt(data.records[i].fields["Verse Count"])
+                }
+            }
+            li.textContent = verseCount
+            ul.appendChild(li)
+            */
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
