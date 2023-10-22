@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css" type="text/css">
     <title>Daily Bread</title>
 </head>
+
 <body>
+    <div class="container">
+        <div class="input-column">
+            <input type="date" id="inputDate"> Choose the Thursday before current Solid Ground<br>
+            <input type="number" id="day0"> Enter Thursday's verse count<br>
+            <input type="number" id="day1"> Enter Friday's verse count<br>
+            <input type="number" id="day2"> Enter Saturday's verse count<br>
+            <input type="number" id="day3"> Enter Sunday's verse count<br>
+            <input type="number" id="day4"> Enter Monday's verse count<br>
+            <input type="number" id="day5"> Enter Tuesday's verse count<br>
+            <input type="number" id="day6"> Enter Wednesday's verse count<br>
+            <button id="weeklyBread"> Calculate This Week's Verses</button><br>
+            <!--- <button id="totalVerses">Calculate total verses read</button><br> -->
+        </div>
 
-        <input type="date" id="inputDate"> Choose the Thursday before current Solid Ground<br>
-        <input type="number" id="day0"> Enter Thursday's verse count<br>
-        <input type="number" id="day1"> Enter Friday's verse count<br>
-        <input type="number" id="day2"> Enter Saturday's verse count<br>
-        <input type="number" id="day3"> Enter Sunday's verse count<br>
-        <input type="number" id="day4"> Enter Monday's verse count<br>
-        <input type="number" id="day5"> Enter Tuesday's verse count<br>
-        <input type="number" id="day6"> Enter Wednesday's verse count<br>
-        <button id="weeklyBread">Calculate This Week's Verses</button><br>
-        <!--- <button id="totalVerses">Calculate total verses read</button><br> -->
-
-    <ul id="output"></ul>
-
+        <div>
+            <ul id="output" class="output-column"></ul>
+        </div>
+    </div>
+    <div class="background-container"></div>
     <script src="frontend.js"></script>
 </body>
+
 </html>

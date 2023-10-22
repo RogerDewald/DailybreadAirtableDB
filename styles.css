@@ -2,14 +2,57 @@ html{
     font-family: Arial, Helvetica, sans-serif;
     font-size: x-large;
 }
-#inputDate:hover{
+body{
+    background-image: url("ccologo.png");
+    background-position: 90% 40%;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    
+}
+.container{
+    display: grid;
+    grid-template-columns: 900px 1fr;
+    grid-gap: 20px;
+
+}
+.input-column{
+    padding-bottom: 10px;
+    outline: 2x;
+    outline-style: solid;
+    outline-width: 2px;
+    border-radius: 10px; /* Adjust the value to control the roundness of the corners */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+
+}
+.output-column{
+    outline: 2x;
+    outline-style: solid;
+    outline-width: 2px;
+    border-radius: 10px; /* Adjust the value to control the roundness of the corners */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    background-color: aliceblue;
+
+}
+input{
+    margin: 10px;
+    border-radius: 5px;
+}
+#inputDate {
     background: lightcyan;
+}
+#inputDate:hover{
+    background: lightseagreen;
 }
 button {
     color: black;
     background: lightcyan;
+    margin-left: 9px;
+    border-radius: 5px;
 }
 
 button:hover{
     background: lightseagreen;
+}
+li{
+    margin: 10px;
 }
