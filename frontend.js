@@ -15,6 +15,13 @@ document.getElementById("weeklyBread").addEventListener("click", function(){
 document.getElementById("totalVerses").addEventListener("click", function () {
     retrieveAllVerses()
 })
+
+document.getElementById("clearData").addEventListener("click", function(){
+    let list = document.getElementById("output")
+    while(list.firstChild){
+        list.removeChild(list.firstChild)
+    }
+})
 function retrieveData() {
     const token = 'patVda4XZrXZ0bO0K.288e91a938d45dbb9d4bc4d9908ce7da2e8e93d55b53b04b3d74e7afcc534abd';
     const baseId = 'appV7WLGs7utmV0m8';
