@@ -56,3 +56,8 @@ button:hover{
 li{
     margin: 10px;
 }
+.dateList{
+    list-style: none;
+    text-align: center;
+    padding-top: 10px;
+}

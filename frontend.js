@@ -1,25 +1,26 @@
 function getDate() {
     date = document.getElementById("inputDate").value
-    console.log(date)
     return date
 }
 
 document.getElementById("weeklyBread").addEventListener("click", function(){
     const verseArray = getVerseArray()
     for (verse of verseArray){
-        console.log(verse)
     }
     retrieveData()
 })
 
-document.getElementById("totalVerses").addEventListener("click", function () {
-    retrieveAllVerses()
-})
+//document.getElementById("totalVerses").addEventListener("click", function () {
+//    retrieveAllVerses()
+//})
 
 document.getElementById("clearData").addEventListener("click", function(){
-    let list = document.getElementById("output")
-    if (list.children.lengh > 0){
-        list.removeChild(list.lastElementChild)
+    var list = document.getElementById("output")
+    console.log("clearClick")
+    console.log(list.children.length)
+    let length = list.children.length
+    for (let i = 0; i < length; i++){
+        list.removeChild(list.firstChild)
     }
 })
 function retrieveData() {
@@ -47,12 +48,16 @@ function retrieveData() {
     fetch(url, { headers })
         .then(response => response.json())
         .then(data => {
-            // Handle the data returned by Airtable
-            //console.log(data.records[0].fields.Name)
             let verseCount = 0
+
+            const dateLi = document.createElement('li')
+            dateLi.className = "dateList"
+            dateLi.textContent = dateToFilter
+            ul.appendChild(dateLi)
+
             for (let i = 0; i <data.records.length;i++){
                 const li = document.createElement('li');
-                if (data.records[i].fields["Days reporting"] == undefined){
+                if (data.records[i].fields["I completed every chapter this week"] == true){
                     verseCount = getTotalCount()
                 }
                 else {
@@ -63,7 +68,6 @@ function retrieveData() {
                 ul.appendChild(li)
                 console.log(data.records[i].fields)
             }
-            
             console.log(data);
         })
         .catch(error => {
@@ -91,7 +95,7 @@ function getTotalCount() {
     return count
 }
 function getVerseCount(array){
-    verseArray = getVerseArray()
+    let verseArray = getVerseArray()
     let count = 0
     for (let i = 0; i<array.length;i++){
         if (array[i] == "Thursday"){
