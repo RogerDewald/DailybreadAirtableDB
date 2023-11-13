@@ -18,8 +18,8 @@ document.getElementById("totalVerses").addEventListener("click", function () {
 
 document.getElementById("clearData").addEventListener("click", function(){
     let list = document.getElementById("output")
-    while(list.firstChild){
-        list.removeChild(list.firstChild)
+    if (list.children.lengh > 0){
+        list.removeChild(list.lastElementChild)
     }
 })
 function retrieveData() {
