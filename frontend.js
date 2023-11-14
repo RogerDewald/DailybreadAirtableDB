@@ -23,6 +23,72 @@ document.getElementById("clearData").addEventListener("click", function(){
         list.removeChild(list.firstChild)
     }
 })
+document.getElementById("uploadData").addEventListener("click", function(){
+    uploadData();
+})
+function uploadData(){
+    const token = 'patDsSjpG0kxHv2b1.361c26eeffa690891d62e505d0c893515ef984f8a1201cdf8b5660aed6232e63';
+    const baseId = 'appV7WLGs7utmV0m8';
+    const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
+    const dateToFilter = getDate(); // Replace with your desired date
+    const filterFormula = `DATETIME_FORMAT({Reading date beginning}, 'YYYY-MM-DD') = '${dateToFilter}'`;
+  
+    // Construct the URL to fetch data from Airtable
+
+    const url = `https://api.airtable.com/v0/${baseId}/${tableName}?filterByFormula=${encodeURIComponent(filterFormula)}`;
+    
+    // Set up the request headers
+    const headers = {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
+    };
+
+
+    fetch(url, { headers })
+        .then(response => response.json())
+        .then(data => {
+            let verseCount = 0
+            for (let i = 0; i <data.records.length;i++){ 
+                if (data.records[i].fields["I completed every chapter this week"] == true){
+                    verseCount = getTotalCount()
+                }
+                else {
+                    verseCount = getVerseCount(data.records[i].fields["Days reporting"]) 
+                }
+                const recordIdToUpdate = data.records[i].id;
+                const updateUrl = `https://api.airtable.com/v0/${baseId}/${tableName}/${recordIdToUpdate}`;
+
+
+                const updatedRecord = {
+                    fields: {
+                        "Verse Count": verseCount,
+                    },
+
+                };
+
+                fetch(updateUrl, {
+                    method: 'PATCH',
+                    headers,
+                    body: JSON.stringify(updatedRecord),
+                })
+                    .then(response => response.json())
+                    .then(updatedData => {
+                        console.log('Record updated:', updatedData);
+                    })
+                    .catch(error => {
+                        console.error('Error updating record:', error);
+                    });
+
+                console.log(data)
+            }}) 
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+        
+}
+
+
 function retrieveData() {
     const token = 'patVda4XZrXZ0bO0K.288e91a938d45dbb9d4bc4d9908ce7da2e8e93d55b53b04b3d74e7afcc534abd';
     const baseId = 'appV7WLGs7utmV0m8';
