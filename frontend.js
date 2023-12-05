@@ -121,6 +121,7 @@ function retrieveData() {
             dateLi.textContent = dateToFilter
             ul.appendChild(dateLi)
 
+            let nameArray = []
             for (let i = 0; i <data.records.length;i++){
                 const li = document.createElement('li');
                 if (data.records[i].fields["I completed every chapter this week"] == true){
@@ -129,10 +130,17 @@ function retrieveData() {
                 else {
                    verseCount = getVerseCount(data.records[i].fields["Days reporting"]) 
                 }
-                li.textContent = data.records[i].fields.Name + (data.records[i].fields["I completed every chapter this week"] == undefined ? "" : " completed all chapters")
-                                + ": read " + verseCount + " verses"
+                let textContent = data.records[i].fields.Name + (data.records[i].fields["I completed every chapter this week"] == undefined ? "" : " completed all chapters")
+                                + ": read " + verseCount + " verses"  
+                nameArray.push(textContent)
+            }
+
+            nameArray.sort()
+            for (content of nameArray){
+                console.log(content)
+                const li = document.createElement('li')
+                li.textContent = content
                 ul.appendChild(li)
-                console.log(data.records[i].fields)
             }
             console.log(data);
         })
