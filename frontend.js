@@ -5,7 +5,6 @@ function getDate() {
 }
 
 function uploadData() {
-    const yo = 'patDsSjpG0kxHv2b1.361c26eeffa690891d62e505d0c893515ef984f8a1201cdf8b5660aed6232e63';
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
     const dateToFilter = getDate(); // Replace with your desired date
@@ -17,7 +16,7 @@ function uploadData() {
 
     // Set up the request headers
     const headers = {
-        Authorization: `Bearer ${yo}`,
+        Authorization: `Bearer ${process.env.AIRTABLE_API_TOKEN_UPLOAD}`,
         'Content-type': 'application/json',
     };
 
@@ -66,7 +65,6 @@ function uploadData() {
 
 
 function retrieveData() {
-    const yo = 'patVda4XZrXZ0bO0K.288e91a938d45dbb9d4bc4d9908ce7da2e8e93d55b53b04b3d74e7afcc534abd';
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
 
@@ -80,7 +78,7 @@ function retrieveData() {
 
     // Set up the request headers
     const headers = {
-        Authorization: `Bearer ${yo}`,
+        Authorization: `Bearer ${AIRTABLE_API_TOKEN_RECEIVE}`,
     };
 
     // Make the GET request to retrieve records
