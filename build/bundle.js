@@ -1,9 +1,6 @@
 (function () {
     'use strict';
 
-    const receiveKey = "patVda4XZrXZ0bO0K.288e91a938d45dbb9d4bc4d9908ce7da2e8e93d55b53b04b3d74e7afcc534abd";
-    const uploadKey = "patDsSjpG0kxHv2b1.361c26eeffa690891d62e505d0c893515ef984f8a1201cdf8b5660aed6232e63";
-
     createChapterSelect();
 
     const allVersesArray = [[],
@@ -58,6 +55,7 @@
         uploadData();
     });
     function uploadData() {
+        const uploadKey = "patDsSjpG0kxHv2b1.361c26eeffa690891d62e505d0c893515ef984f8a1201cdf8b5660aed6232e63";
         const baseId = 'appV7WLGs7utmV0m8';
         const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
         const dateToFilter = getDate(); // Replace with your desired date
@@ -117,7 +115,22 @@
     }
 
 
-    function retrieveData() {
+    async function retrieveData() {
+        let receiveKey = "";
+        await fetch("http://localhost:7000")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log("response:", data);
+                receiveKey = data;
+            })
+            .catch(error => { console.error("error:", error); });
+
+        console.log(receiveKey);
         const baseId = 'appV7WLGs7utmV0m8';
         const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
 

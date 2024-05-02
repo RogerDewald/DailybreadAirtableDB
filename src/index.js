@@ -1,5 +1,3 @@
-const receiveKey = process.env.AIRTABLE_API_TOKEN_RECEIVE
-const uploadKey = process.env.AIRTABLE_API_TOKEN_UPLOAD
 
 createChapterSelect()
 
@@ -55,6 +53,7 @@ document.getElementById("uploadData").addEventListener("click", function() {
     uploadData();
 })
 function uploadData() {
+    const uploadKey = process.env.AIRTABLE_API_TOKEN_UPLOAD
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
     const dateToFilter = getDate(); // Replace with your desired date
@@ -114,7 +113,22 @@ function uploadData() {
 }
 
 
-function retrieveData() {
+async function retrieveData() {
+    let receiveKey = ""
+    await fetch("http://localhost:7000")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log("response:", data)
+            receiveKey = data
+        })
+        .catch(error => { console.error("error:", error) })
+
+    console.log(receiveKey)
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
 
