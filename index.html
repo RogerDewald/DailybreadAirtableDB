@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/styles.css" type="text/css">
+    <link rel="stylesheet" href="styles/styles.css" type="text/css">
     <title>Daily Bread</title>
 </head>
 
@@ -56,7 +56,8 @@
                 <!--- <button id="totalVerses">Calculate total verses read</button><br> -->
                 <button id="uploadData"> Upload Data </button><br>
             </div>
-            <a class="imgAnchor" href="https://www.ccoklahoma.org/" target="_blank"><img src="ccologo.png" alt="ccologo"></a>
+            <a class="imgAnchor" href="https://www.ccoklahoma.org/" target="_blank"><img src="ccologo.png"
+                    alt="ccologo"></a>
         </div>
 
         <div class="outputColumnMain">
@@ -66,10 +67,18 @@
         </div>
     </div>
 
-    <script src="../build/bundle.js"></script>
+    <div id="popupContainer" class="overlay" style="display:none;">
+        <div class="popup">
+            <label for="textInput">What is your name? Mine is Daniel.</label><br>
+            <input type="text" id="textInput"><br><br>
+            <button id="close">OK</button>
+        </div>
+    </div>
+
+    <script src="src/index.js"></script>
     <!--
+        <script src="build/bundle.js"></script>
         <script src="../src/init.js"></script>
-        <script src="../src/index.js"></script>
         <script src="../src/listener.js"></script>
     -->
 </body>

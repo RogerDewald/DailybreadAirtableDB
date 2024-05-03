@@ -32,7 +32,6 @@
     ([[], 25]),
     ([[], 20, 29, 22, 11, 14, 17, 17, 13, 21, 11, 19, 17, 18, 20, 8, 21, 18, 24, 21, 15, 27, 21])
     ];
-    console.log(allVersesArray);
 
     function getDate() {
         return document.getElementById("inputDate").value
@@ -52,10 +51,28 @@
     });
 
     document.getElementById("uploadData").addEventListener("click", function() {
-        uploadData();
+        openPopup();
     });
-    function uploadData() {
-        const uploadKey = "patDsSjpG0kxHv2b1.361c26eeffa690891d62e505d0c893515ef984f8a1201cdf8b5660aed6232e63";
+    document.getElementById("close").addEventListener("click", function() {
+        authorize();
+        closePopup();
+    });
+
+    async function uploadData() {
+        let uploadKey = "";
+        await fetch("http://localhost:7000/upload")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text()
+            })
+            .then(data => {
+                uploadKey = data;
+            })
+            .catch(error => { console.error("error:", error); });
+
+
         const baseId = 'appV7WLGs7utmV0m8';
         const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
         const dateToFilter = getDate(); // Replace with your desired date
@@ -103,6 +120,7 @@
                         .then(response => response.json())
                         .then(updatedData => {
                             console.log('Record updated:', updatedData);
+                            alert("It is finished");
                         })
                         .catch(error => {
                             console.error('Error updating record:', error);
@@ -117,15 +135,15 @@
 
     async function retrieveData() {
         let receiveKey = "";
-        await fetch("http://localhost:7000")
+        await fetch("http://localhost:7000/receive")
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text();
+                console.log("yo");
+                return response.text()
             })
             .then(data => {
-                console.log("response:", data);
                 receiveKey = data;
             })
             .catch(error => { console.error("error:", error); });
@@ -272,6 +290,39 @@
             option.text = number;
             numberSelector.appendChild(option);
         });
+    }
+
+    function openPopup() {
+        var popup = document.getElementById("popupContainer");
+        popup.style.display = "flex";
+    }
+
+    function closePopup() {
+        var popup = document.getElementById("popupContainer");
+        popup.style.display = "none";
+    }
+
+    async function authorize() {
+        let nameAuthorization = "";
+
+        await fetch("http://localhost:7000/nameid")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text()
+            })
+            .then(data => {
+                nameAuthorization = data;
+            })
+            .catch(error => { console.error("error:", error); });
+
+        if (document.getElementById("textInput").value != nameAuthorization) {
+            alert("You are not authorized to upload");
+        }
+        else {
+            uploadData();
+        }
     }
 
 })();

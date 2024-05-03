@@ -30,7 +30,6 @@ const allVersesArray = [[],
 ('Jude', 1, [[], 25]),
 ('Revelation', 22, [[], 20, 29, 22, 11, 14, 17, 17, 13, 21, 11, 19, 17, 18, 20, 8, 21, 18, 24, 21, 15, 27, 21])
 ]
-console.log(allVersesArray)
 
 function getDate() {
     return document.getElementById("inputDate").value
@@ -50,10 +49,36 @@ document.getElementById("clearData").addEventListener("click", function() {
 })
 
 document.getElementById("uploadData").addEventListener("click", function() {
-    uploadData();
+    openPopup()
 })
-function uploadData() {
-    const uploadKey = process.env.AIRTABLE_API_TOKEN_UPLOAD
+document.getElementById("close").addEventListener("click", function() {
+    authorize()
+    closePopup()
+})
+document.getElementById("textInput").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        // Prevent the default action (form submission) of the Enter key
+        event.preventDefault();
+        // Click the submit button
+        document.getElementById("close").click();
+    }
+})
+
+async function uploadData() {
+    let uploadKey = ""
+    await fetch("http://localhost:7000/upload")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text()
+        })
+        .then(data => {
+            uploadKey = data
+        })
+        .catch(error => { console.error("error:", error) })
+
+
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
     const dateToFilter = getDate(); // Replace with your desired date
@@ -101,6 +126,7 @@ function uploadData() {
                     .then(response => response.json())
                     .then(updatedData => {
                         console.log('Record updated:', updatedData);
+                        alert("It is finished")
                     })
                     .catch(error => {
                         console.error('Error updating record:', error);
@@ -115,26 +141,25 @@ function uploadData() {
 
 async function retrieveData() {
     let receiveKey = ""
-    await fetch("http://localhost:7000")
+    await fetch("http://localhost:7000/receive")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.text();
+            return response.text()
         })
         .then(data => {
-            console.log("response:", data)
             receiveKey = data
         })
         .catch(error => { console.error("error:", error) })
 
-    console.log(receiveKey)
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
 
     const ul = document.getElementById("output")
 
     const dateToFilter = getDate();
+
     const filterFormula = `DATETIME_FORMAT({Reading date beginning}, 'YYYY-MM-DD') = '${dateToFilter}'`;
 
     // Construct the URL to fetch data from Airtable
@@ -272,3 +297,36 @@ function createChapterSelect() {
     });
 }
 
+function openPopup() {
+    var popup = document.getElementById("popupContainer");
+    popup.style.display = "flex";
+    document.getElementById("textInput").focus()
+}
+
+function closePopup() {
+    var popup = document.getElementById("popupContainer");
+    popup.style.display = "none";
+}
+
+async function authorize() {
+    let nameAuthorization = ""
+
+    await fetch("http://localhost:7000/nameid")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text()
+        })
+        .then(data => {
+            nameAuthorization = data
+        })
+        .catch(error => { console.error("error:", error) })
+
+    if (document.getElementById("textInput").value != nameAuthorization) {
+        alert("You are not authorized to upload")
+    }
+    else {
+        uploadData()
+    }
+}
