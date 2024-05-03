@@ -1,5 +1,7 @@
 
 createChapterSelect()
+const nodeURL = "192.168.40.222"
+const nodePORT = "7000"
 
 const allVersesArray = [[],
 ('Matthew', 28, [[], 25, 23, 17, 25, 48, 34, 29, 34, 38, 42, 30, 50, 58, 36, 39, 28, 27, 35, 30, 34, 46, 46, 39, 51, 46, 75, 66, 20]),
@@ -32,7 +34,14 @@ const allVersesArray = [[],
 ]
 
 function getDate() {
-    return document.getElementById("inputDate").value
+   
+    if( document.getElementById("inputDate").value){
+        return document.getElementById("inputDate").value
+    }
+    else {
+        alert("Input a Date")
+        return -1
+    }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
     retrieveData()
@@ -66,7 +75,7 @@ document.getElementById("textInput").addEventListener("keydown", function(event)
 
 async function uploadData() {
     let uploadKey = ""
-    await fetch("http://localhost:7000/upload")
+    await fetch(`http://${nodeURL}:${nodePORT}/upload`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -141,7 +150,7 @@ async function uploadData() {
 
 async function retrieveData() {
     let receiveKey = ""
-    await fetch("http://localhost:7000/receive")
+    await fetch(`http://${nodeURL}:${nodePORT}/receive`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -159,6 +168,9 @@ async function retrieveData() {
     const ul = document.getElementById("output")
 
     const dateToFilter = getDate();
+    if (dateToFilter == -1){
+        return
+    }
 
     const filterFormula = `DATETIME_FORMAT({Reading date beginning}, 'YYYY-MM-DD') = '${dateToFilter}'`;
 
@@ -311,7 +323,7 @@ function closePopup() {
 async function authorize() {
     let nameAuthorization = ""
 
-    await fetch("http://localhost:7000/nameid")
+    await fetch(`http://${nodeURL}:${nodePORT}/nameid`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
