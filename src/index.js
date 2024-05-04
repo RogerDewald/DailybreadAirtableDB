@@ -158,12 +158,14 @@ async function retrieveData() {
             return response.text()
         })
         .then(data => {
+            console.log(data)
             receiveKey = data
         })
         .catch(error => { console.error("error:", error) })
 
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
+    console.log(receiveKey)
 
     const ul = document.getElementById("output")
 
