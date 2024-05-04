@@ -1,6 +1,6 @@
 
 createChapterSelect()
-const nodeURL = "192.168.40.222"
+const nodeURL = "localhost"
 const nodePORT = "7000"
 
 const allVersesArray = [[],
