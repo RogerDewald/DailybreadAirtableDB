@@ -45,7 +45,13 @@ function getDate() {
     }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
-    const receiveKey = getRetrieveKey()
+    let receiveKey = ""
+    try{
+        receiveKey = getRetrieveKey()
+    }
+    catch(error) {
+        console.log(error)
+    }
     retrieveData(receiveKey)
 })
 
