@@ -149,6 +149,7 @@ async function uploadData() {
 
 
 async function retrieveData() {
+    var receiveKey = ""
     await fetch("/api/receive")
         .then(response => {
             if (!response.ok) {
@@ -158,7 +159,7 @@ async function retrieveData() {
         })
         .then(data => {
             console.log(data)
-            var receiveKey = data
+            receiveKey = data
         })
         .catch(error => { console.error("error:", error) })
 
