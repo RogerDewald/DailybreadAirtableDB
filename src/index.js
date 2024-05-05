@@ -1,5 +1,5 @@
-
 createChapterSelect()
+
 const nodeURL = "localhost"
 const nodePORT = "7000"
 
@@ -163,9 +163,9 @@ async function retrieveData() {
         })
         .catch(error => { console.error("error:", error) })
 
+    console.log(receiveKey)
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
-    console.log(receiveKey)
 
     const ul = document.getElementById("output")
 
