@@ -334,6 +334,7 @@ function getRetrieveKey(){
         })
         .catch(error => { console.error("error:", error) })
 
+    console.log(receiveget)
     return receiveget
 }
 
