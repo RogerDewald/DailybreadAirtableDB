@@ -320,7 +320,6 @@ async function authorize() {
 }
 
 function getRetrieveKey(){
-    let receiveget = ""
     fetch("/api/receive")
         .then(response => {
             if (!response.ok) {
@@ -330,16 +329,12 @@ function getRetrieveKey(){
         })
         .then(data => {
             console.log(data)
-            receiveget = data
+            return data
         })
         .catch(error => { console.error("error:", error) })
-
-    console.log(receiveget)
-    return receiveget
 }
 
 function getUploadKey(){
-    let uploadget = ""
     fetch("/api/upload")
         .then(response => {
             if (!response.ok) {
@@ -348,9 +343,8 @@ function getUploadKey(){
             return response.text()
         })
         .then(data => {
-            uploadget = data
+            return data
         })
         .catch(error => { console.error("error:", error) })
-    return uploadget
 
 }
