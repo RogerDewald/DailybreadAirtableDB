@@ -332,7 +332,7 @@ function getRetrieveKey(){
         })
         .catch(error => { console.error("error:", error) })
 
-    return receiveKey
+    return receiveget
 }
 
 function getUploadKey(){
@@ -348,6 +348,6 @@ function getUploadKey(){
             uploadget = data
         })
         .catch(error => { console.error("error:", error) })
-    return uploadKey
+    return uploadget
 
 }
