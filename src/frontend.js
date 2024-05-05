@@ -3,6 +3,9 @@ createChapterSelect()
 const nodeURL = "localhost"
 const nodePORT = "7000"
 
+const uploadKey = getUploadKey()
+const receiveKey = getRetrieveKey()
+
 const allVersesArray = [[],
 ('Matthew', 28, [[], 25, 23, 17, 25, 48, 34, 29, 34, 38, 42, 30, 50, 58, 36, 39, 28, 27, 35, 30, 34, 46, 46, 39, 51, 46, 75, 66, 20]),
 ('Mark', 16, [[], 45, 28, 35, 41, 43, 56, 37, 38, 50, 52, 33, 44, 37, 72, 47, 20]),
@@ -74,20 +77,6 @@ document.getElementById("textInput").addEventListener("keydown", function(event)
 })
 
 async function uploadData() {
-    let uploadKey = ""
-    await fetch("/api/upload")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text()
-        })
-        .then(data => {
-            uploadKey = data
-        })
-        .catch(error => { console.error("error:", error) })
-
-
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
     const dateToFilter = getDate(); // Replace with your desired date
@@ -160,11 +149,10 @@ function retrieveData() {
 
     // Construct the URL to fetch data from Airtable
     const url = `https://api.airtable.com/v0/${baseId}/${tableName}?filterByFormula=${encodeURIComponent(filterFormula)}`;
-    const yo = getRetrieveKey()
 
     // Set up the request headers
     const headers = {
-        Authorization: `Bearer ${yo}`,
+        Authorization: `Bearer ${receiveKey}`,
     };
 
     // Make the GET request to retrieve records
@@ -330,7 +318,7 @@ async function authorize() {
 }
 
 function getRetrieveKey(){
-    let receiveKey = ""
+    let receiveget = ""
     fetch("/api/receive")
         .then(response => {
             if (!response.ok) {
@@ -340,10 +328,26 @@ function getRetrieveKey(){
         })
         .then(data => {
             console.log(data)
-            receiveKey = data
+            receiveget = data
         })
         .catch(error => { console.error("error:", error) })
 
-    console.log(receiveKey)
     return receiveKey
+}
+
+function getUploadKey(){
+    let uploadget = ""
+    fetch("/api/upload")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text()
+        })
+        .then(data => {
+            uploadget = data
+        })
+        .catch(error => { console.error("error:", error) })
+    return uploadKey
+
 }
