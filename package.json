@@ -2,7 +2,7 @@
   "name": "dailybreadairtabledb",
   "version": "1.0.0",
   "description": "Connects to our Airtable Database, and then filters according to date and counts verses.",
-  "main": "src/backend.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ."
