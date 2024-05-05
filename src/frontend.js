@@ -180,10 +180,6 @@ function retrieveData() {
     // Construct the URL to fetch data from Airtable
     const url = `https://api.airtable.com/v0/${baseId}/${tableName}?filterByFormula=${encodeURIComponent(filterFormula)}`;
 
-    while (receiveKey == "") {
-        console.log("In the Loop")
-    }
-
     // Set up the request headers
     const headers = {
         Authorization: `Bearer ${receiveKey}`,
