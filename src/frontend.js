@@ -149,31 +149,12 @@ async function uploadData() {
 
 
 function retrieveData() {
-    let receiveKey = ""
-    fetch("/api/receive")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text()
-        })
-        .then(data => {
-            console.log(data)
-            receiveKey = data
-        })
-        .catch(error => { console.error("error:", error) })
-
-    console.log(receiveKey)
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
 
     const ul = document.getElementById("output")
 
     const dateToFilter = getDate();
-
-    if (dateToFilter == -1) {
-        return
-    }
 
     const filterFormula = `DATETIME_FORMAT({Reading date beginning}, 'YYYY-MM-DD') = '${dateToFilter}'`;
 
@@ -182,7 +163,7 @@ function retrieveData() {
 
     // Set up the request headers
     const headers = {
-        Authorization: `Bearer ${receiveKey}`,
+        Authorization: `Bearer ${getRetrieveKey()}`,
     };
 
     // Make the GET request to retrieve records
@@ -345,4 +326,23 @@ async function authorize() {
     else {
         uploadData()
     }
+}
+
+function getRetrieveKey(){
+    let receiveKey = ""
+    fetch("/api/receive")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text()
+        })
+        .then(data => {
+            console.log(data)
+            receiveKey = data
+        })
+        .catch(error => { console.error("error:", error) })
+
+    console.log(receiveKey)
+    return receiveKey
 }
