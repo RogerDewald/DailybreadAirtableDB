@@ -137,6 +137,8 @@ async function uploadData(apiKey) {
 
 
 function retrieveData(apiKey) {
+    console.log(apiKey)
+    console.log("Yo")
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
 
