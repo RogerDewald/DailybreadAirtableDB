@@ -45,14 +45,13 @@ function getDate() {
     }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
-    let receiveKey = ""
     try{
-        receiveKey = getRetrieveKey()
+        let receiveKey = getRetrieveKey()
+        retrieveData(receiveKey)
     }
     catch(error) {
         console.log(error)
     }
-    retrieveData(receiveKey)
 })
 
 document.getElementById("clearData").addEventListener("click", function() {
