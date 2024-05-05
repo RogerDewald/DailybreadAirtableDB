@@ -150,7 +150,7 @@ async function uploadData() {
 
 async function retrieveData() {
     let receiveKey = ""
-    await fetch("/api/receive/")
+    await fetch("/api/receive")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -179,7 +179,7 @@ async function retrieveData() {
     // Construct the URL to fetch data from Airtable
     const url = `https://api.airtable.com/v0/${baseId}/${tableName}?filterByFormula=${encodeURIComponent(filterFormula)}`;
 
-    while(!receiveKey){
+    while(receiveKey == ""){
         console.log("In the Loop")
     }
 
