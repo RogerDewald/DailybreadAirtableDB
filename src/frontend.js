@@ -3,8 +3,6 @@ createChapterSelect()
 const nodeURL = "localhost"
 const nodePORT = "7000"
 
-const uploadKey = getUploadKey()
-const receiveKey = getRetrieveKey()
 
 const allVersesArray = [[],
 ('Matthew', 28, [[], 25, 23, 17, 25, 48, 34, 29, 34, 38, 42, 30, 50, 58, 36, 39, 28, 27, 35, 30, 34, 46, 46, 39, 51, 46, 75, 66, 20]),
@@ -47,7 +45,8 @@ function getDate() {
     }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
-    retrieveData()
+    const receiveKey = getRetrieveKey()
+    retrieveData(receiveKey)
 })
 
 document.getElementById("clearData").addEventListener("click", function() {
@@ -76,7 +75,7 @@ document.getElementById("textInput").addEventListener("keydown", function(event)
     }
 })
 
-async function uploadData() {
+async function uploadData(apiKey) {
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
     const dateToFilter = getDate(); // Replace with your desired date
@@ -88,7 +87,7 @@ async function uploadData() {
 
     // Set up the request headers
     const headers = {
-        Authorization: `Bearer ${uploadKey}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-type': 'application/json',
     };
 
@@ -137,7 +136,7 @@ async function uploadData() {
 }
 
 
-function retrieveData() {
+function retrieveData(apiKey) {
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
 
@@ -152,7 +151,7 @@ function retrieveData() {
 
     // Set up the request headers
     const headers = {
-        Authorization: `Bearer ${receiveKey}`,
+        Authorization: `Bearer ${apiKey}`,
     };
 
     // Make the GET request to retrieve records
@@ -313,7 +312,8 @@ async function authorize() {
         alert("You are not authorized to upload")
     }
     else {
-        uploadData()
+        const uploadKey = getUploadKey()
+        uploadData(uploadKey)
     }
 }
 
