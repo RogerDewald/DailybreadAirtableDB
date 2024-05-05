@@ -5,3 +5,4 @@ rollup.config.mjs
 src/init.js
 src/listener.js
 src/yo.js
+.vercel

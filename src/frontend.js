@@ -75,7 +75,7 @@ document.getElementById("textInput").addEventListener("keydown", function(event)
 
 async function uploadData() {
     let uploadKey = ""
-    await fetch(`http://${nodeURL}:${nodePORT}/upload`)
+    await fetch("/api/upload")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -150,7 +150,7 @@ async function uploadData() {
 
 async function retrieveData() {
     let receiveKey = ""
-    await fetch(`http://${nodeURL}:${nodePORT}/receive`)
+    await fetch("/api/receive/")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -325,7 +325,7 @@ function closePopup() {
 async function authorize() {
     let nameAuthorization = ""
 
-    await fetch(`http://${nodeURL}:${nodePORT}/nameid`)
+    await fetch("/api/nameid")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
