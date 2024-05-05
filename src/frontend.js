@@ -149,7 +149,7 @@ async function uploadData() {
 
 
 async function retrieveData() {
-    var receiveKey = ""
+    let receiveKey = ""
     await fetch("/api/receive")
         .then(response => {
             if (!response.ok) {
@@ -170,6 +170,7 @@ async function retrieveData() {
     const ul = document.getElementById("output")
 
     const dateToFilter = getDate();
+
     if (dateToFilter == -1){
         return
     }
@@ -192,6 +193,7 @@ async function retrieveData() {
     fetch(url, { headers })
         .then(response => response.json())
         .then(data => {
+            console.log(data)
             let verseCount = 0
 
             const dateLi = document.createElement('li')
