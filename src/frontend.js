@@ -84,6 +84,7 @@ async function uploadData() {
         })
         .catch(error => { console.error("error:", error) })
 
+    loadingOn()
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
     const dateToFilter = getDate(); // Replace with your desired date
@@ -130,6 +131,7 @@ async function uploadData() {
                 })
                     .then(response => response.json())
                     .then(() => {
+                        loadingOff()
                         alert("It is finished")
                     })
                     .catch(error => {
@@ -144,6 +146,7 @@ async function uploadData() {
 
 
 async function retrieveData() {
+    loadingOn()
     let howdy = ""
     await fetch("/api/receive")
         .then(response => {
@@ -178,6 +181,7 @@ async function retrieveData() {
     await fetch(url, { headers })
         .then(response => response.json())
         .then(data => {
+            loadingOff()
             let verseCount = 0
 
             const dateLi = document.createElement('li')
@@ -207,7 +211,6 @@ async function retrieveData() {
                 ul.appendChild(li)
             }
             ul.style.outlineWidth = "2px"
-            ul.style.display = "inline"
         })
         .catch(error => {
             console.error('Error:', error);
