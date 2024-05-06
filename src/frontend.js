@@ -174,9 +174,10 @@ async function retrieveData() {
         Authorization: `Bearer ${yo}`,
     };
     console.log(howdy)
+    console.log(headers)
 
     // Make the GET request to retrieve records
-    fetch(url, { headers })
+    await fetch(url, { headers })
         .then(response => response.json())
         .then(data => {
             console.log(howdy)
