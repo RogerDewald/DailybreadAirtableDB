@@ -146,6 +146,7 @@ function retrieveData() {
         .then(apiData => {
             const howdy = apiData
             console.log(apiData)
+            console.log(typeof apiData)
             console.log(howdy)
             const baseId = 'appV7WLGs7utmV0m8';
             const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
