@@ -137,7 +137,7 @@ async function uploadData(apiKey) {
 
 async function retrieveData() {
     let howdy = ""
-    await fetch("http://127.0.0.1:8080/api/receive")
+    await fetch("/api/receive")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -171,7 +171,7 @@ async function retrieveData() {
 
     // Set up the request headers
     let headers = {
-        Authorization: `Bearer ${yo}`,
+        Authorization: `Bearer ${howdy}`,
     };
     console.log(howdy)
     console.log(headers)
