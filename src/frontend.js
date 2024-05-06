@@ -146,9 +146,6 @@ async function retrieveData() {
         })
         .then(apiData => {
             howdy = apiData
-            console.log(apiData)
-            console.log(typeof apiData)
-            console.log(howdy)
         })
         .catch(error => { console.error("error:", error) })
 
@@ -168,12 +165,13 @@ async function retrieveData() {
         alert("Alter!")
         return
     }
+    console.log(yo)
+    console.log(howdy)
 
     // Set up the request headers
     let headers = {
         Authorization: `Bearer ${howdy}`,
     };
-    console.log(howdy)
     console.log(headers)
 
     // Make the GET request to retrieve records
