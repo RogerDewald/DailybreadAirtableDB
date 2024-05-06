@@ -137,7 +137,7 @@ async function uploadData(apiKey) {
 
 async function retrieveData() {
     let howdy = ""
-    await fetch("/api/receive")
+    await fetch("http://127.0.0.1:8080/api/receive")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -170,7 +170,7 @@ async function retrieveData() {
     }
 
     // Set up the request headers
-    const headers = {
+    let headers = {
         Authorization: `Bearer ${yo}`,
     };
     console.log(howdy)
@@ -329,6 +329,7 @@ async function authorize() {
             nameAuthorization = data
         })
         .catch(error => { console.error("error:", error) })
+    console.log(nameAuthorization)
 
     if (document.getElementById("textInput").value != nameAuthorization) {
         alert("You are not authorized to upload")
