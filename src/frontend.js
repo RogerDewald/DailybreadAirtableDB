@@ -74,7 +74,20 @@ document.getElementById("textInput").addEventListener("keydown", function(event)
     }
 })
 
-async function uploadData(apiKey) {
+async function uploadData() {
+    let apiKey = ""
+    await fetch("/api/upload")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text()
+        })
+        .then(data => {
+            apiKey = data
+        })
+        .catch(error => { console.error("error:", error) })
+
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
     const dateToFilter = getDate(); // Replace with your desired date
@@ -332,8 +345,7 @@ async function authorize() {
         alert("You are not authorized to upload")
     }
     else {
-        const uploadKey = getUploadKey()
-        uploadData(uploadKey)
+        uploadData()
     }
 }
 
@@ -341,16 +353,5 @@ function getRetrieveKey() {
 }
 
 function getUploadKey() {
-    fetch("/api/upload")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text()
-        })
-        .then(data => {
-            return data
-        })
-        .catch(error => { console.error("error:", error) })
 
 }
