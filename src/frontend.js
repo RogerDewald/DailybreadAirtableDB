@@ -159,10 +159,11 @@ function retrieveData() {
 
             // Construct the URL to fetch data from Airtable
             const url = `https://api.airtable.com/v0/${baseId}/${tableName}?filterByFormula=${encodeURIComponent(filterFormula)}`;
+            const yo = "patVda4XZrXZ0bO0K.288e91a938d45dbb9d4bc4d9908ce7da2e8e93d55b53b04b3d74e7afcc534abd"
 
             // Set up the request headers
             const headers = {
-                Authorization: `Bearer ${howdy}`,
+                Authorization: `Bearer ${yo}`,
             };
             console.log(howdy)
 
