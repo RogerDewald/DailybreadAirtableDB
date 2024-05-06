@@ -1,9 +1,5 @@
 createChapterSelect()
 
-const nodeURL = "localhost"
-const nodePORT = "7000"
-
-
 const allVersesArray = [[],
 ('Matthew', 28, [[], 25, 23, 17, 25, 48, 34, 29, 34, 38, 42, 30, 50, 58, 36, 39, 28, 27, 35, 30, 34, 46, 46, 39, 51, 46, 75, 66, 20]),
 ('Mark', 16, [[], 45, 28, 35, 41, 43, 56, 37, 38, 50, 52, 33, 44, 37, 72, 47, 20]),
@@ -50,7 +46,7 @@ document.getElementById("weeklyBread").addEventListener("click", function() {
 
 document.getElementById("clearData").addEventListener("click", function() {
     var list = document.getElementById("output")
-    console.log(list.children.length)
+
     let length = list.children.length
     for (let i = 0; i < length; i++) {
         list.removeChild(list.firstChild)
@@ -133,8 +129,7 @@ async function uploadData() {
                     body: JSON.stringify(updatedRecord),
                 })
                     .then(response => response.json())
-                    .then(updatedData => {
-                        console.log('Record updated:', updatedData);
+                    .then(() => {
                         alert("It is finished")
                     })
                     .catch(error => {
@@ -173,24 +168,16 @@ async function retrieveData() {
 
     // Construct the URL to fetch data from Airtable
     const url = `https://api.airtable.com/v0/${baseId}/${tableName}?filterByFormula=${encodeURIComponent(filterFormula)}`;
-    const yo = "patVda4XZrXZ0bO0K.288e91a938d45dbb9d4bc4d9908ce7da2e8e93d55b53b04b3d74e7afcc534abd"
-
-    console.log(yo)
-    console.log(howdy)
 
     // Set up the request headers
     let headers = {
         Authorization: `Bearer ${howdy}`,
     };
 
-    console.log(headers)
-
     // Make the GET request to retrieve records
     await fetch(url, { headers })
         .then(response => response.json())
         .then(data => {
-            console.log(howdy)
-            console.log(data)
             let verseCount = 0
 
             const dateLi = document.createElement('li')
@@ -220,6 +207,7 @@ async function retrieveData() {
                 ul.appendChild(li)
             }
             ul.style.outlineWidth = "2px"
+            ul.style.display = "inline"
         })
         .catch(error => {
             console.error('Error:', error);
@@ -339,7 +327,6 @@ async function authorize() {
             nameAuthorization = data
         })
         .catch(error => { console.error("error:", error) })
-    console.log(nameAuthorization)
 
     if (document.getElementById("textInput").value != nameAuthorization) {
         alert("You are not authorized to upload")
@@ -349,9 +336,9 @@ async function authorize() {
     }
 }
 
-function getRetrieveKey() {
+function loadingOn(){
+    document.getElementById("loading-container").style.display = "flex"
 }
-
-function getUploadKey() {
-
+function loadingOff(){
+    document.getElementById("loading-container").style.display = "none"
 }
