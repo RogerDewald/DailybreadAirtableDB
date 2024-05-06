@@ -144,7 +144,7 @@ function retrieveData() {
             return response.text()
         })
         .then(apiData => {
-            let howdy = apiData
+            const howdy = apiData
             console.log(apiData)
             console.log(howdy)
             const baseId = 'appV7WLGs7utmV0m8';
