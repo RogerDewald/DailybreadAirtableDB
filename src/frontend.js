@@ -136,6 +136,7 @@ async function uploadData(apiKey) {
 
 
 async function retrieveData() {
+    let howdy = ""
     await fetch("/api/receive")
         .then(response => {
             if (!response.ok) {
@@ -144,7 +145,7 @@ async function retrieveData() {
             return response.text()
         })
         .then(apiData => {
-            const howdy = apiData
+            howdy = apiData
             console.log(apiData)
             console.log(typeof apiData)
             console.log(howdy)
@@ -163,7 +164,7 @@ async function retrieveData() {
     // Construct the URL to fetch data from Airtable
     const url = `https://api.airtable.com/v0/${baseId}/${tableName}?filterByFormula=${encodeURIComponent(filterFormula)}`;
     const yo = "patVda4XZrXZ0bO0K.288e91a938d45dbb9d4bc4d9908ce7da2e8e93d55b53b04b3d74e7afcc534abd"
-    if (yo == apiData) {
+    if (yo == howdy) {
         alert("Alter!")
         return
     }
