@@ -163,11 +163,13 @@ function retrieveData() {
             const headers = {
                 Authorization: `Bearer ${howdy}`,
             };
+            console.log(howdy)
 
             // Make the GET request to retrieve records
             fetch(url, { headers })
                 .then(response => response.json())
                 .then(data => {
+                    console.log(howdy)
                     console.log(data)
                     let verseCount = 0
 
