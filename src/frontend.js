@@ -45,7 +45,7 @@ function getDate() {
     }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
-        retrieveData()
+    retrieveData()
 })
 
 document.getElementById("clearData").addEventListener("click", function() {
@@ -144,8 +144,9 @@ function retrieveData() {
             return response.text()
         })
         .then(apiData => {
+            let howdy = apiData
             console.log(apiData)
-            console.log("Yo")
+            console.log(howdy)
             const baseId = 'appV7WLGs7utmV0m8';
             const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
 
@@ -160,7 +161,7 @@ function retrieveData() {
 
             // Set up the request headers
             const headers = {
-                Authorization: `Bearer ${apiData}`,
+                Authorization: `Bearer ${howdy}`,
             };
 
             // Make the GET request to retrieve records
@@ -329,10 +330,10 @@ async function authorize() {
     }
 }
 
-function getRetrieveKey(){
+function getRetrieveKey() {
 }
 
-function getUploadKey(){
+function getUploadKey() {
     fetch("/api/upload")
         .then(response => {
             if (!response.ok) {
