@@ -1,1 +1,6 @@
 node_modules
+.vercel
+api
+.git
+.env
+README.md
