@@ -72,7 +72,7 @@ document.getElementById("textInput").addEventListener("keydown", function(event)
 
 async function uploadData() {
     let apiKey = ""
-    await fetch("/api/upload")
+    await fetch("http://localhost:8080/upload")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -148,7 +148,7 @@ async function uploadData() {
 async function retrieveData() {
     loadingOn()
     let howdy = ""
-    await fetch("/api/receive")
+    await fetch("http://localhost:8080/receive")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -160,6 +160,7 @@ async function retrieveData() {
         })
         .catch(error => { console.error("error:", error) })
 
+    console.log(howdy)
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
 
@@ -319,7 +320,7 @@ function closePopup() {
 async function authorize() {
     let nameAuthorization = ""
 
-    await fetch("/api/nameid")
+    await fetch("http://localhost:8080/nameid")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
