@@ -160,7 +160,6 @@ async function retrieveData() {
         })
         .catch(error => { console.error("error:", error) })
 
-    console.log(howdy)
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
 
