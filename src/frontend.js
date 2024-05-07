@@ -72,7 +72,7 @@ document.getElementById("textInput").addEventListener("keydown", function(event)
 
 async function uploadData() {
     let apiKey = ""
-    await fetch("http://localhost:8080/upload")
+    await fetch("http://localhost:5000/upload")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -148,7 +148,7 @@ async function uploadData() {
 async function retrieveData() {
     loadingOn()
     let howdy = ""
-    await fetch("http://localhost:8080/receive")
+    await fetch("http://localhost:5000/receive")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -320,7 +320,7 @@ function closePopup() {
 async function authorize() {
     let nameAuthorization = ""
 
-    await fetch("http://localhost:8080/nameid")
+    await fetch("http://localhost:5000/nameid")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
