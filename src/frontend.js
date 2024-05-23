@@ -60,6 +60,11 @@ document.getElementById("uploadData").addEventListener("click", function() {
 document.getElementById("close").addEventListener("click", function() {
     authorize()
     closePopup()
+    loadingOff()
+})
+document.getElementById("cancel").addEventListener("click", function(){
+    closePopup()
+    loadingOff()
 })
 document.getElementById("textInput").addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
@@ -328,14 +333,17 @@ async function authorize() {
         })
         .then(data => {
             nameAuthorization = data
+            if (document.getElementById("textInput").value == nameAuthorization) {
+                uploadData()
+            }
+            else {
+                alert("You are not authorized to upload")
+            }
         })
         .catch(error => { console.error("error:", error) })
 
-    if (document.getElementById("textInput").value != nameAuthorization) {
-        alert("You are not authorized to upload")
-    }
-    else {
-        uploadData()
+    if (!document.getElementById("textInput").value){
+        alert("Please insert a name")
     }
 }
 
