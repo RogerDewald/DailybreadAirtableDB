@@ -263,6 +263,8 @@ function getVerseCount(array) {
 function getFromAllVersesArray() {
     const startingChapter = document.getElementById("chapterSelect").value
     const startingBook = document.getElementById("bookSelect").value
+    const chapterLimit = 8
+
     let arr = []
 
     let count = 0
@@ -274,7 +276,7 @@ function getFromAllVersesArray() {
 
             arr.push(allVersesArray[i][j])
 
-            if (count == 7) {
+            if (count == chapterLimit) {
                 return arr
             }
         }
@@ -282,7 +284,7 @@ function getFromAllVersesArray() {
 
     //This second loop is for when we reach the end of the Bible and flow
     //into Matthew
-    if (count < 7) {
+    if (count < chapterLimit) {
 
         for (let j = 1; j < 28; j++) {
 
@@ -290,7 +292,7 @@ function getFromAllVersesArray() {
 
             arr.push(allVersesArray[1][j])
 
-            if (count == 7) {
+            if (count == chapterLimit) {
                 return arr
             }
         }
