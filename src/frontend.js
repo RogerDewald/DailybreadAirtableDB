@@ -192,7 +192,7 @@ async function retrieveData() {
             const dateLi = document.createElement('li')
             dateLi.className = "dateList"
             let prettyDate = dateToFilter.split("-")
-            dateLi.textContent = `${prettyDate[2]}/${prettyDate[1]}/${prettyDate[0]}`
+            dateLi.textContent = `${prettyDate[1]} / ${prettyDate[2]} / ${prettyDate[0]}`
             ul.appendChild(dateLi)
 
             let nameArray = []
