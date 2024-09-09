@@ -37,7 +37,7 @@ function getDate() {
     }
     else {
         alert("Input a Date")
-        return -1
+        return "No Date Chosen"
     }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
