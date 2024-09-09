@@ -30,6 +30,9 @@ const allVersesArray = [[],
 ('Revelation', 22, [[], 20, 29, 22, 11, 14, 17, 17, 13, 21, 11, 19, 17, 18, 20, 8, 21, 18, 24, 21, 15, 27, 21])
 ]
 
+const dotenv = require('dotenv')
+dotenv.config()
+
 function getDate() {
 
     if (document.getElementById("inputDate").value) {
@@ -62,7 +65,7 @@ document.getElementById("close").addEventListener("click", function() {
     closePopup()
     loadingOff()
 })
-document.getElementById("cancel").addEventListener("click", function(){
+document.getElementById("cancel").addEventListener("click", function() {
     closePopup()
     loadingOff()
 })
@@ -77,17 +80,18 @@ document.getElementById("textInput").addEventListener("keydown", function(event)
 
 async function uploadData() {
     let apiKey = ""
-    await fetch("/api/upload")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text()
-        })
-        .then(data => {
-            apiKey = data
-        })
-        .catch(error => { console.error("error:", error) })
+    apiKey = process.env.AIRTABLE_API_TOKEN_UPLOAD
+    //await fetch("/api/upload")
+    //    .then(response => {
+    //        if (!response.ok) {
+    //            throw new Error('Network response was not ok');
+    //        }
+    //        return response.text()
+    //    })
+    //    .then(data => {
+    //        apiKey = data
+    //    })
+    //    .catch(error => { console.error("error:", error) })
 
     loadingOn()
     const baseId = 'appV7WLGs7utmV0m8';
@@ -153,17 +157,18 @@ async function uploadData() {
 async function retrieveData() {
     loadingOn()
     let howdy = ""
-    await fetch("/api/receive")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text()
-        })
-        .then(apiData => {
-            howdy = apiData
-        })
-        .catch(error => { console.error("error:", error) })
+    howdy = process.env.AIRTABLE_API_TOKEN_RECEIVE
+    //await fetch("/api/receive")
+    //    .then(response => {
+    //        if (!response.ok) {
+    //            throw new Error('Network response was not ok');
+    //        }
+    //        return response.text()
+    //    })
+    //    .then(apiData => {
+    //        howdy = apiData
+    //    })
+    //    .catch(error => { console.error("error:", error) })
 
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
@@ -325,33 +330,35 @@ function closePopup() {
 
 async function authorize() {
     let nameAuthorization = ""
+    nameAuthorization = process.env.NAMEID 
 
-    await fetch("/api/nameid")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text()
-        })
-        .then(data => {
-            nameAuthorization = data
-            if (document.getElementById("textInput").value == nameAuthorization) {
-                uploadData()
-            }
-            else {
-                alert("You are not authorized to upload")
-            }
-        })
-        .catch(error => { console.error("error:", error) })
+    //await fetch("/api/nameid")
+    //    .then(response => {
+    //        if (!response.ok) {
+    //            throw new Error('Network response was not ok');
+    //        }
+    //        return response.text()
+    //    })
+    //    .then(data => {
+    //        nameAuthorization = data
+    //        }
+    //    })
+    //    .catch(error => { console.error("error:", error) })
 
-    if (!document.getElementById("textInput").value){
-        alert("Please insert a name")
+    if (document.getElementById("textInput").value == nameAuthorization) {
+        uploadData()
+    }
+    else {
+        alert("You are not authorized to upload")
+        if (!document.getElementById("textInput").value) {
+            alert("Please insert a name")
+        }
     }
 }
 
-function loadingOn(){
+function loadingOn() {
     document.getElementById("loading-container").style.display = "flex"
 }
-function loadingOff(){
+function loadingOff() {
     document.getElementById("loading-container").style.display = "none"
 }
