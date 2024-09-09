@@ -37,7 +37,7 @@ function getDate() {
     }
     else {
         alert("Input a Date")
-        return "No Date Chosen"
+        return ""
     }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
@@ -191,8 +191,9 @@ async function retrieveData() {
 
             const dateLi = document.createElement('li')
             dateLi.className = "dateList"
-            let prettyDate = dateToFilter.split("-")
-            dateLi.textContent = `${prettyDate[1]} / ${prettyDate[2]} / ${prettyDate[0]}`
+            let prePrettyDate = dateToFilter.split("-")
+            let prettyDate = `${prePrettyDate[1]} / ${prePrettyDate[2]} / ${prePrettyDate[0]}`
+            dateLi.textContent = (dateToFilter) ? prettyDate : "No Date Chosen" 
             ul.appendChild(dateLi)
 
             let nameArray = []

@@ -12,10 +12,12 @@ html {
 .left-column {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 30%;
 }
 
 .input-column {
+    z-index: 10;
     margin-top: 20;
     position: sticky;
     position: -webkit-sticky;
@@ -30,11 +32,12 @@ html {
     border-radius: 10px;
     /* Adjust the value to control the roundness of the corners */
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    background-color: #ebeff5;
 
     margin: 20px;
 }
 
-#options-row{
+#options-row {
     display: flex;
     justify-content: center;
 }
@@ -46,6 +49,7 @@ html {
     position: -webkit-sticky;
     top: 224px;
     width: 100%;
+    z-index: -22222;
 }
 
 img {
@@ -84,7 +88,8 @@ button {
     border-radius: 5px;
     padding: 7px;
 }
-.dynamic-inputs{
+
+.dynamic-inputs {
     padding: 3px;
 }
 
@@ -136,22 +141,45 @@ select:hover {
 }
 
 .loading-container {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(36, 47, 63, 0.25);
-  display:flex;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(36, 47, 63, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .loader {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  position: relative;
-  border: 4px solid #Fff;
-  animation: loader 2s infinite ease;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    border: 4px solid #Fff;
+    animation: loader 2s infinite ease;
+}
+
+@media (max-width: 1354px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .left-column {
+        order: 2;
+    }
+
+    .output-column {
+        order: 1;
+    }
+    #options-row{
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+    }
+    button{
+        margin: 5px;
+    }
 }
