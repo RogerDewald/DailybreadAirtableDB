@@ -13,7 +13,7 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 30%;
+    width: 50%;
 }
 
 .input-column {
@@ -42,6 +42,18 @@ html {
     justify-content: center;
 }
 
+#options-set{
+    display: flex;
+    align-items: center;
+    padding: 0px;
+    height: 2rem;
+}
+#options-set-column{
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
 .imgAnchor {
     display: flex;
     flex-direction: column;
@@ -49,7 +61,6 @@ html {
     position: -webkit-sticky;
     top: 224px;
     width: 100%;
-    z-index: -22222;
 }
 
 img {
@@ -184,6 +195,9 @@ select:hover {
 
     .output-column {
         order: 1;
+    }
+    #options-set{
+        height: 2.5rem;
     }
     #options-row{
         display: flex;
