@@ -205,8 +205,8 @@ async function retrieveData() {
                 else {
                     verseCount = getVerseCount(data.records[i].fields["Days reporting"])
                 }
-                let textContent = data.records[i].fields.Name + (data.records[i].fields["I completed every chapter this week"] == undefined ? "" : " completed all chapters")
-                    + ": read " + verseCount + " verses"
+                let textContent = data.records[i].fields.Name + (data.records[i].fields["I completed every chapter this week"] == undefined ? "read" : " completed all chapters")
+                    + verseCount + " verses"
 
                 nameArray.push(textContent)
             }
