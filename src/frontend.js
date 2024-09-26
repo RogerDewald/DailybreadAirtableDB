@@ -372,7 +372,6 @@ async function calculateAllVerses() {
         alert("Website Down, contact Daniel")
     }
     loadingOff()
-    console.log(apiKey)
 
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
