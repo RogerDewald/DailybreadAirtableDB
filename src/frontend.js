@@ -62,7 +62,7 @@ document.getElementById("close").addEventListener("click", function() {
     closePopup()
     loadingOff()
 })
-document.getElementById("cancel").addEventListener("click", function(){
+document.getElementById("cancel").addEventListener("click", function() {
     closePopup()
     loadingOff()
 })
@@ -73,6 +73,9 @@ document.getElementById("textInput").addEventListener("keydown", function(event)
         // Click the submit button
         document.getElementById("close").click();
     }
+})
+document.getElementById("totalVerses").addEventListener("click", function() {
+    calculateAllVerses()
 })
 
 async function uploadData() {
@@ -193,7 +196,7 @@ async function retrieveData() {
             dateLi.className = "dateList"
             let prePrettyDate = dateToFilter.split("-")
             let prettyDate = `${prePrettyDate[1]} / ${prePrettyDate[2]} / ${prePrettyDate[0]}`
-            dateLi.textContent = (dateToFilter) ? prettyDate : "No Date Chosen" 
+            dateLi.textContent = (dateToFilter) ? prettyDate : "No Date Chosen"
             ul.appendChild(dateLi)
 
             let nameArray = []
@@ -346,14 +349,45 @@ async function authorize() {
         })
         .catch(error => { console.error("error:", error) })
 
-    if (!document.getElementById("textInput").value){
+    if (!document.getElementById("textInput").value) {
         alert("Please insert a name")
     }
 }
 
-function loadingOn(){
+function loadingOn() {
     document.getElementById("loading-container").style.display = "flex"
 }
-function loadingOff(){
+function loadingOff() {
     document.getElementById("loading-container").style.display = "none"
+}
+
+async function calculateAllVerses() {
+    loadingOn()
+    let apiKey = ""
+    try {
+        const apiKeyHeaders = await fetch("/api/receive")
+        apiKey = await apiKeyHeaders.text()
+    }
+    catch {
+        alert("Website Down, contact Daniel")
+    }
+        loadingOff()
+    console.log(apiKey)
+
+    const baseId = 'appV7WLGs7utmV0m8';
+    const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
+
+    // Construct the URL to fetch data from Airtable
+    const url = `https://api.airtable.com/v0/${baseId}/${tableName}`
+
+    // Set up the request headers
+    let headers = {
+        Authorization: `Bearer ${apiKey}`,
+    };
+
+    // Make the GET request to retrieve records
+    const response = await fetch(url, { headers })
+    const json = response.json()
+    console.log(json)
+
 }
