@@ -395,8 +395,22 @@ async function calculateAllVerses() {
     })
 
     const ul = document.getElementById("output")
+    const dateLi = document.createElement('li').className = "dateList"
+    //  dateLi.className = "dateList"
     const li = document.createElement('li')
+
     li.textContent = `Total verses read: ${total}`
+    dateLi.textContent = findSemester()
+
+    ul.appendChild(dateLi)
     ul.appendChild(li)
+
+}
+
+function findSemester() {
+    const date = getDate()
+    const prePrettyDate = date.split("-")
+    const month = prePrettyDate[1]
+    return (month < 6) ? "Spring Semester" : "Fall Semester"
 
 }
