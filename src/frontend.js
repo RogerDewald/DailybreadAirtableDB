@@ -389,18 +389,15 @@ async function calculateAllVerses() {
     const response = await fetch(url, { headers })
     const json = await response.json()
     const data = json.records
-    console.log(data)
-    console.log(json.records)
-    console.log(json)
 
-    //let total = 0
-    //data.foreach(e => {
-    //    total += e.fields["Verse Count"]
-    //})
+    let total = 0
+    data.forEach(e => {
+        total += e.fields["Verse Count"]
+    })
 
-    //const ul = document.getElementById("output")
-    //const li = document.createElement('li')
-    //li.textContent = `Total verses read: ${total}`
-    //ul.appendChild(li)
+    const ul = document.getElementById("output")
+    const li = document.createElement('li')
+    li.textContent = `Total verses read: ${total}`
+    ul.appendChild(li)
 
 }
