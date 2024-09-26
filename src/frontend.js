@@ -395,8 +395,8 @@ async function calculateAllVerses() {
     })
 
     const ul = document.getElementById("output")
-    const dateLi = document.createElement('li').className = "dateList"
-    //  dateLi.className = "dateList"
+    const dateLi = document.createElement('li')
+    dateLi.className = "dateList"
     const li = document.createElement('li')
 
     li.textContent = `Total verses read: ${total}`
