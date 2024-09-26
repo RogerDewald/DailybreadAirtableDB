@@ -388,6 +388,7 @@ async function calculateAllVerses() {
     // Make the GET request to retrieve records
     const response = await fetch(url, { headers })
     const json = response.json()
-    json.records.foreach(e=> console.log(e))
+    console.log(response)
+    console.log(json)
 
 }
