@@ -392,7 +392,7 @@ async function calculateAllVerses() {
 
     let total = 0
     data.forEach(e => {
-        total += e.fields["Verse Count"]
+        total += (parseInt(e.fields["Verse Count"])) ? parseInt(e.fields["Verse Count"]) : 0
     })
 
     const ul = document.getElementById("output")
