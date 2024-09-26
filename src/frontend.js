@@ -371,7 +371,7 @@ async function calculateAllVerses() {
     catch {
         alert("Website Down, contact Daniel")
     }
-        loadingOff()
+    loadingOff()
     console.log(apiKey)
 
     const baseId = 'appV7WLGs7utmV0m8';
@@ -388,6 +388,16 @@ async function calculateAllVerses() {
     // Make the GET request to retrieve records
     const response = await fetch(url, { headers })
     const json = await response.json()
-    console.log(json)
+    const data = json.records
+
+    let total = 0
+    data.foreach(e => {
+        total += e.fields["Verse Count"]
+    })
+
+    const ul = document.getElementById("output")
+    const li = document.createElement('li')
+    li.textContent = `Total verses read: ${total}`
+    ul.appendChild(li)
 
 }
