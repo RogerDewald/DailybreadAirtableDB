@@ -6,9 +6,11 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebas
 let app = ""
 let analytics = ""
 let db = ""
+let firebaseConfig = ""
 
 async function firebaseInit() {
-    const firebaseConfig = await fetch("/api/getFirebaseAPI")
+    firebaseConfig = await fetch("/api/getFirebaseAPI")
+    console.log(firebaseConfig)
     app = initializeApp(firebaseConfig);
     analytics = getAnalytics(app);
     db = getFirestore(app)
