@@ -1,11 +1,17 @@
 createChapterSelect()
-app = ""
-db = ""
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
+
+let app = ""
+let analytics = ""
+let db = ""
 
 async function firebaseInit() {
     const firebaseConfig = await fetch("/api/getFirebaseAPI")
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    app = initializeApp(firebaseConfig);
+    analytics = getAnalytics(app);
+    db = getFirestore(app)
 }
 
 window.addEventListener("load", firebaseInit())
@@ -442,7 +448,7 @@ function findSemester() {
 
 async function postDayIndex(chapterIndex, verseIndex) {
     try {
-        await db.collection("dayIndex").add({ chapterIndex, verseIndex });
+        await addDoc(collection(db, "dayIndex"), { chapterIndex, verseIndex })
         alert("Firebase Works");
     } catch (error) {
         console.error("Firestore POST Error", error);
@@ -451,7 +457,7 @@ async function postDayIndex(chapterIndex, verseIndex) {
 
 async function getDayIndex() {
     try {
-        const indices = await db.collection("dayIndex").get()
+        const indices = await getDocs(collection(db, "dayIndex"))
         const recent = indices.pop()
         return [recent.chapterIndex, recent.verseIndex]
     }
