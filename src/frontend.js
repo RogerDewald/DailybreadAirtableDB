@@ -9,7 +9,8 @@ let db = ""
 let firebaseConfig = ""
 
 async function firebaseInit() {
-    firebaseConfig = await fetch("/api/getFirebaseAPI")
+    const response = await fetch("/api/getFirebaseAPI")
+    firebaseConfig = response.json()
     console.log(firebaseConfig)
     app = initializeApp(firebaseConfig);
     analytics = getAnalytics(app);
