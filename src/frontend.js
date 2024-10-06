@@ -1,5 +1,9 @@
 createChapterSelect()
 
+const firebaseConfig = await fetch("/api/getFirebaseAPI")
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 const allVersesArray = [[],
 ('Matthew', 28, [[], 25, 23, 17, 25, 48, 34, 29, 34, 38, 42, 30, 50, 58, 36, 39, 28, 27, 35, 30, 34, 46, 46, 39, 51, 46, 75, 66, 20]),
 ('Mark', 16, [[], 45, 28, 35, 41, 43, 56, 37, 38, 50, 52, 33, 44, 37, 72, 47, 20]),
@@ -42,6 +46,7 @@ function getDate() {
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
     retrieveData()
+    console.log(getDayIndex)
 })
 
 document.getElementById("clearData").addEventListener("click", function() {
@@ -276,6 +281,8 @@ function getFromAllVersesArray() {
     const chapterLimit = 8
 
     let arr = []
+    let chapterIndexArray = []
+    let verseIndexArray = []
 
     let count = 0
 
@@ -285,8 +292,11 @@ function getFromAllVersesArray() {
             count += 1
 
             arr.push(allVersesArray[i][j])
+            chapterIndexArray.push(i)
+            verseIndexArray.push(j)
 
             if (count == chapterLimit) {
+                postDayIndex(chapterIndexArray.pop(), verseIndexArray.pop())
                 return arr
             }
         }
@@ -298,11 +308,14 @@ function getFromAllVersesArray() {
 
         for (let j = 1; j < 28; j++) {
 
-            count += 1
 
             arr.push(allVersesArray[1][j])
+            count += 1
+            chapterIndexArray.push(1)
+            verseIndexArray.push(j)
 
             if (count == chapterLimit) {
+                postDayIndex(chapterIndexArray.pop(), verseIndexArray.pop())
                 return arr
             }
         }
@@ -418,4 +431,24 @@ function findSemester() {
     const month = prePrettyDate[1]
     return (month < 6) ? "Spring Semester" : "Fall Semester"
 
+}
+
+async function postDayIndex(chapterIndex, verseIndex) {
+    try {
+        await db.collection("dayIndex").add({ chapterIndex, verseIndex });
+        alert("Firebase Works");
+    } catch (error) {
+        console.error("Firestore POST Error", error);
+    }
+}
+
+async function getDayIndex() {
+    try {
+        const indices = await db.collection("dayIndex").get()
+        const recent = indices.pop()
+        return [recent.chapterIndex, recent.verseIndex]
+    }
+    catch (error) {
+        console.error("Firestore GET Error", error);
+    }
 }
