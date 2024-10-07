@@ -64,7 +64,10 @@ function getDate() {
     }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
-    retrieveData()
+    //retrieveData()
+    let yo = getFromAllVersesArray()
+    console.log(localStorage.getItem("chapterIndex"))
+    console.log(localStorage.getItem("verseIndex"))
 })
 
 document.getElementById("clearData").addEventListener("click", function() {
@@ -294,9 +297,10 @@ function getVerseCount(array) {
 }
 
 function getFromAllVersesArray() {
-    const startingChapter = document.getElementById("chapterSelect").value
-    const startingBook = document.getElementById("bookSelect").value
+    const startingChapter = parseInt(document.getElementById("chapterSelect").value)
+    const startingBook = parseInt(document.getElementById("bookSelect").value)
     const chapterLimit = 8
+    let j = startingChapter
 
     let arr = []
     let chapterIndexArray = []
@@ -305,20 +309,24 @@ function getFromAllVersesArray() {
     let count = 0
 
     for (let i = startingBook; i < allVersesArray.length; i++) {
-        for (let j = startingChapter; j < allVersesArray[i].length; j++) {
+        for (; j < allVersesArray[i].length; j++) {
 
             count += 1
 
             arr.push(allVersesArray[i][j])
             chapterIndexArray.push(i)
             verseIndexArray.push(j)
+            console.log(i)
 
             if (count == chapterLimit) {
                 localStorage.setItem('chapterIndex', chapterIndexArray.pop())
+                console.log(chapterIndexArray)
+                console.log(verseIndexArray)
                 localStorage.setItem('verseIndex', verseIndexArray.pop())
                 return arr
             }
         }
+        j = 1
     }
 
     //This second loop is for when we reach the end of the Bible and flow
@@ -484,18 +492,32 @@ const daysSinceThursday = (today.getDay() - 4 + 7) % 7 || 7;
 const lastThursday = new Date(today);
 lastThursday.setDate(today.getDate() - daysSinceThursday);
 
-console.log(lastThursday)
-
 // Format the date to YYYY-MM-DD for the date input
 const year = lastThursday.getFullYear();
 const month = String(lastThursday.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
 const day = String(lastThursday.getDate()).padStart(2, '0');
-console.log(year)
-console.log(month)
-console.log(day)
+
+const intThursdayDate = (parseInt(year), parseInt(month), parseInt(day))
 
 const formattedDate = `${year}-${month}-${day}`;
-console.log(formattedDate)
 
 // Set the value of the date input
 document.getElementById('inputDate').value = formattedDate;
+
+let autoStartVerse = parseInt(localStorage.getItem("verseIndex")) + 1
+let autoStartChapter = parseInt(localStorage.getItem("chapterIndex"))
+
+if (autoStartVerse >= allVersesArray[autoStartChapter].length) {
+    autoStartVerse = 1
+    if (autoStartChapter == 12) {
+        autoStartChapter = 1
+    }
+    else {
+        autoStartChapter += 1
+    }
+}
+
+window.onload = function() {
+    document.getElementById("chapterSelect").value = autoStartVerse
+    document.getElementById("bookSelect").value = autoStartChapter
+}
