@@ -483,13 +483,18 @@ const daysSinceThursday = (today.getDay() + 2) % 7;
 // Set the date to the previous Thursday
 const lastThursday = new Date(today);
 lastThursday.setDate(today.getDate() - daysSinceThursday);
+console.log(lastThursday)
 
 // Format the date to YYYY-MM-DD for the date input
 const year = lastThursday.getFullYear();
 const month = String(lastThursday.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
 const day = String(lastThursday.getDate()).padStart(2, '0');
+console.log(year)
+console.log(month)
+console.log(day)
 
 const formattedDate = `${year}-${month}-${day}`;
+console.log(formattedDate)
 
 // Set the value of the date input
 document.getElementById('dateInput').value = formattedDate;
