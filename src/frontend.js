@@ -66,8 +66,7 @@ function getDate() {
 document.getElementById("weeklyBread").addEventListener("click", function() {
     //retrieveData()
     let yo = getFromAllVersesArray()
-    console.log(localStorage.getItem("chapterIndex"))
-    console.log(localStorage.getItem("verseIndex"))
+    localStorage.setItem("date", "")
 })
 
 document.getElementById("clearData").addEventListener("click", function() {
@@ -303,8 +302,8 @@ function getFromAllVersesArray() {
     let j = startingChapter
 
     let arr = []
+    let bookIndexArray = []
     let chapterIndexArray = []
-    let verseIndexArray = []
 
     let count = 0
 
@@ -314,15 +313,18 @@ function getFromAllVersesArray() {
             count += 1
 
             arr.push(allVersesArray[i][j])
-            chapterIndexArray.push(i)
-            verseIndexArray.push(j)
-            console.log(i)
+            bookIndexArray.push(i)
+            chapterIndexArray.push(j)
 
             if (count == chapterLimit) {
-                localStorage.setItem('chapterIndex', chapterIndexArray.pop())
-                console.log(chapterIndexArray)
-                console.log(verseIndexArray)
-                localStorage.setItem('verseIndex', verseIndexArray.pop())
+                if (today.getDay() == 4) {
+                    localStorage.setItem('previousBookIndex', bookIndexArray.pop())
+                    localStorage.setItem('previousChapterIndex', chapterIndexArray.pop())
+                }
+                else {
+                    localStorage.setItem('bookIndex', bookIndexArray.pop())
+                    localStorage.setItem('chapterIndex', chapterIndexArray.pop())
+                }
                 return arr
             }
         }
@@ -338,12 +340,18 @@ function getFromAllVersesArray() {
 
             arr.push(allVersesArray[1][j])
             count += 1
-            chapterIndexArray.push(1)
-            verseIndexArray.push(j)
+            bookIndexArray.push(1)
+            chapterIndexArray.push(j)
 
             if (count == chapterLimit) {
-                localStorage.setItem('chapterIndex', chapterIndexArray.pop())
-                localStorage.setItem('verseIndex', verseIndexArray.pop())
+                if (today.getDay() == 4) {
+                    localStorage.setItem('previousBookIndex', bookIndexArray.pop())
+                    localStorage.setItem('previousChapterIndex', chapterIndexArray.pop())
+                }
+                else {
+                    localStorage.setItem('bookIndex', bookIndexArray.pop())
+                    localStorage.setItem('chapterIndex', chapterIndexArray.pop())
+                }
                 return arr
             }
         }
@@ -486,11 +494,19 @@ async function getDayIndex() {
 const today = new Date();
 
 // Calculate how many days we need to go back to reach the previous Thursday
-const daysSinceThursday = (today.getDay() - 4 + 7) % 7 || 7;
+let daysBack;
+if (today.getDay() === 4) {
+    // If today is Thursday, go back one week (7 days)
+    daysBack = 7;
+} else {
+    // If today is not Thursday, go back to the Thursday from two weeks prior
+    const daysSinceThursday = (today.getDay() - 4 + 7) % 7;
+    daysBack = daysSinceThursday + 7; // Adding another 7 days for two weeks ago
+}
 
 // Set the date to the previous Thursday
 const lastThursday = new Date(today);
-lastThursday.setDate(today.getDate() - daysSinceThursday);
+lastThursday.setDate(today.getDate() - daysBack);
 
 // Format the date to YYYY-MM-DD for the date input
 const year = lastThursday.getFullYear();
@@ -504,20 +520,26 @@ const formattedDate = `${year}-${month}-${day}`;
 // Set the value of the date input
 document.getElementById('inputDate').value = formattedDate;
 
-let autoStartVerse = parseInt(localStorage.getItem("verseIndex")) + 1
-let autoStartChapter = parseInt(localStorage.getItem("chapterIndex"))
+let autoStartChapter = parseInt(localStorage.getItem("chapterIndex")) + 1
+let autoStartBook = parseInt(localStorage.getItem("bookIndex"))
 
-if (autoStartVerse >= allVersesArray[autoStartChapter].length) {
-    autoStartVerse = 1
-    if (autoStartChapter == 12) {
-        autoStartChapter = 1
+if (autoStartChapter >= allVersesArray[autoStartBook].length) {
+    autoStartChapter = 1
+    if (autoStartBook == 12) {
+        autoStartBook = 1
     }
     else {
-        autoStartChapter += 1
+        autoStartBook += 1
     }
 }
 
 window.onload = function() {
-    document.getElementById("chapterSelect").value = autoStartVerse
-    document.getElementById("bookSelect").value = autoStartChapter
+    if (today.getDay() == 4) {
+        document.getElementById("chapterSelect").value = autoStartBook
+        document.getElementById("bookSelect").value = autoStartBook
+    }
+    else {
+        document.getElementById("chapterSelect").value = localStorage.getItem("previousChapterIndex")
+        document.getElementById("bookSelect").value = localStorage.getItem("previousBookIndex")
+    }
 }
