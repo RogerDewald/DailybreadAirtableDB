@@ -497,4 +497,4 @@ const formattedDate = `${year}-${month}-${day}`;
 console.log(formattedDate)
 
 // Set the value of the date input
-document.getElementById('dateInput').value = formattedDate;
+document.getElementById('inputDate').value = formattedDate;
