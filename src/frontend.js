@@ -64,6 +64,7 @@ function getDate() {
     }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
+    getFromAllVersesArray()
     retrieveData()
 })
 
