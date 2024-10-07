@@ -478,11 +478,12 @@ async function getDayIndex() {
 const today = new Date();
 
 // Calculate how many days we need to go back to reach the previous Thursday
-const daysSinceThursday = (today.getDay() + 2) % 7;
+const daysSinceThursday = (today.getDay() - 4 + 7) % 7 || 7;
 
 // Set the date to the previous Thursday
 const lastThursday = new Date(today);
 lastThursday.setDate(today.getDate() - daysSinceThursday);
+
 console.log(lastThursday)
 
 // Format the date to YYYY-MM-DD for the date input
