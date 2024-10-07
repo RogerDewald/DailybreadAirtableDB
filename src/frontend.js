@@ -319,12 +319,6 @@ function getFromAllVersesArray() {
                 if (today.getDay() == 4) {
                     localStorage.setItem('previousBookIndex', bookIndexArray.pop())
                     localStorage.setItem('previousChapterIndex', chapterIndexArray.pop())
-                    localStorage.setItem('bookIndex', bookIndexArray.pop())
-                    localStorage.setItem('chapterIndex', chapterIndexArray.pop())
-                }
-                else {
-                    localStorage.setItem('bookIndex', bookIndexArray.pop())
-                    localStorage.setItem('chapterIndex', chapterIndexArray.pop())
                 }
                 return arr
             }
@@ -348,10 +342,6 @@ function getFromAllVersesArray() {
                 if (today.getDay() == 4) {
                     localStorage.setItem('previousBookIndex', bookIndexArray.pop())
                     localStorage.setItem('previousChapterIndex', chapterIndexArray.pop())
-                }
-                else {
-                    localStorage.setItem('bookIndex', bookIndexArray.pop())
-                    localStorage.setItem('chapterIndex', chapterIndexArray.pop())
                 }
                 return arr
             }
@@ -518,24 +508,29 @@ const intThursdayDate = (parseInt(year), parseInt(month), parseInt(day))
 
 const formattedDate = `${year}-${month}-${day}`;
 
+if (today.getDay() == 4) {
+    localStorage.setItem("previousThursday", today)
+}
+
 // Set the value of the date input
 document.getElementById('inputDate').value = formattedDate;
 
-let autoStartChapter = parseInt(localStorage.getItem("chapterIndex")) + 1
-let autoStartBook = parseInt(localStorage.getItem("bookIndex")) | 1
-
-if (autoStartChapter >= allVersesArray[autoStartBook].length) {
-    autoStartChapter = 1
-    if (autoStartBook == 12) {
-        autoStartBook = 1
-    }
-    else {
-        autoStartBook += 1
-    }
-}
 
 window.onload = function() {
-    if (today.getDay() == 4) {
+    let previousThursday = localStorage.getItem("previousThursday") | ""
+    if (today.getDay() == 4 && previousThursday != today) {
+        let autoStartChapter = parseInt(localStorage.getItem("previousChapterIndex")) + 1
+        let autoStartBook = parseInt(localStorage.getItem("previousBookIndex")) | 1
+
+        if (autoStartChapter >= allVersesArray[autoStartBook].length) {
+            autoStartChapter = 1
+            if (autoStartBook == 12) {
+                autoStartBook = 1
+            }
+            else {
+                autoStartBook += 1
+            }
+        }
         document.getElementById("chapterSelect").value = autoStartBook
         document.getElementById("bookSelect").value = autoStartBook
     }
