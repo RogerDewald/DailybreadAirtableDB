@@ -1,5 +1,6 @@
 createChapterSelect()
 
+/*
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
 
@@ -7,6 +8,7 @@ let app = ""
 let analytics = ""
 let db = ""
 let firebaseConfig = ""
+
 
 async function firebaseInit() {
     const response = await fetch("/api/getFirebaseAPI")
@@ -16,8 +18,9 @@ async function firebaseInit() {
     analytics = getAnalytics(app);
     db = getFirestore(app)
 }
-
 window.addEventListener("load", firebaseInit())
+*/
+
 
 
 const allVersesArray = [[],
@@ -62,7 +65,6 @@ function getDate() {
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
     retrieveData()
-    console.log(getDayIndex)
 })
 
 document.getElementById("clearData").addEventListener("click", function() {
@@ -312,7 +314,8 @@ function getFromAllVersesArray() {
             verseIndexArray.push(j)
 
             if (count == chapterLimit) {
-                postDayIndex(chapterIndexArray.pop(), verseIndexArray.pop())
+                localStorage.setItem('chapterIndex', chapterIndexArray.pop())
+                localStorage.setItem('verseIndex', verseIndexArray.pop())
                 return arr
             }
         }
@@ -331,7 +334,8 @@ function getFromAllVersesArray() {
             verseIndexArray.push(j)
 
             if (count == chapterLimit) {
-                postDayIndex(chapterIndexArray.pop(), verseIndexArray.pop())
+                localStorage.setItem('chapterIndex', chapterIndexArray.pop())
+                localStorage.setItem('verseIndex', verseIndexArray.pop())
                 return arr
             }
         }
@@ -449,6 +453,7 @@ function findSemester() {
 
 }
 
+/*
 async function postDayIndex(chapterIndex, verseIndex) {
     try {
         await addDoc(collection(db, "dayIndex"), { chapterIndex, verseIndex })
@@ -468,3 +473,23 @@ async function getDayIndex() {
         console.error("Firestore GET Error", error);
     }
 }
+*/
+
+const today = new Date();
+
+// Calculate how many days we need to go back to reach the previous Thursday
+const daysSinceThursday = (today.getDay() + 2) % 7;
+
+// Set the date to the previous Thursday
+const lastThursday = new Date(today);
+lastThursday.setDate(today.getDate() - daysSinceThursday);
+
+// Format the date to YYYY-MM-DD for the date input
+const year = lastThursday.getFullYear();
+const month = String(lastThursday.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+const day = String(lastThursday.getDate()).padStart(2, '0');
+
+const formattedDate = `${year}-${month}-${day}`;
+
+// Set the value of the date input
+document.getElementById('dateInput').value = formattedDate;
