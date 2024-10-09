@@ -549,6 +549,9 @@ window.onload = function() {
 
 function setVerseData(){
     let jsonData = {book: recentBook, chapter: recentChapter}
+    console.log(recentBook)
+    console.log(recentChapter)
     localStorage.setItem(formattedDate, JSON.stringify(jsonData))
+    console.log(localStorage.getItem(formattedDate))
     console.log(jsonData)
 }
