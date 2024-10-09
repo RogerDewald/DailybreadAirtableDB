@@ -326,6 +326,8 @@ function getFromAllVersesArray() {
                     recentChapter = bookIndexArray.pop()
                     console.log(bookIndexArray)
                     console.log(chapterIndexArray)
+                    console.log(recentBook)
+                    console.log(recentChapter)
                 }
                 return arr
             }
