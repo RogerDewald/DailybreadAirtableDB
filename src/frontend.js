@@ -1,6 +1,4 @@
 createChapterSelect()
-let recentBook
-let recentChapter
 
 /*
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
@@ -68,7 +66,6 @@ function getDate() {
 document.getElementById("weeklyBread").addEventListener("click", function() {
     getFromAllVersesArray()
     retrieveData()
-    setVerseData()
 })
 
 document.getElementById("clearData").addEventListener("click", function() {
@@ -320,12 +317,7 @@ function getFromAllVersesArray() {
 
             if (count == chapterLimit) {
                 if (today.getDay() == 4) {
-                    localStorage.setItem('previousBookIndex', bookIndexArray.pop())
-                    localStorage.setItem('previousChapterIndex', chapterIndexArray.pop())
-                    recentBook = bookIndexArray.pop()
-                    recentChapter = bookIndexArray.pop()
-                    console.log(bookIndexArray.pop())
-                    console.log(chapterIndexArray.pop())
+                    setVerseData(chapterIndexArray.pop(), bookIndexArray.pop())
                 }
                 return arr
             }
@@ -347,10 +339,7 @@ function getFromAllVersesArray() {
 
             if (count == chapterLimit) {
                 if (today.getDay() == 4) {
-                    localStorage.setItem('previousBookIndex', bookIndexArray.pop())
-                    localStorage.setItem('previousChapterIndex', chapterIndexArray.pop())
-                    recentBook = bookIndexArray.pop()
-                    recentChapter = bookIndexArray.pop()
+                    setVerseData(chapterIndexArray.pop(), bookIndexArray.pop())
                 }
                 return arr
             }
@@ -549,8 +538,8 @@ window.onload = function() {
     }
 }
 
-function setVerseData(){
-    let jsonData = {book: recentBook, chapter: recentChapter}
+async function setVerseData() {
+    let jsonData = { book: recentBook, chapter: recentChapter }
     console.log(recentBook)
     console.log(recentChapter)
     localStorage.setItem(formattedDate, JSON.stringify(jsonData))
