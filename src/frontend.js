@@ -535,7 +535,7 @@ window.onload = function() {
         document.getElementById("bookSelect").value = autoStartBook
     }
     else {
-        document.getElementById("chapterSelect").value = localStorage.getItem("previousChapterIndex") || 1
-        document.getElementById("bookSelect").value = localStorage.getItem("previousBookIndex") || 1
+        document.getElementById("chapterSelect").value = localStorage.getItem("previousChapterIndex") | 1
+        document.getElementById("bookSelect").value = localStorage.getItem("previousBookIndex") | 1
     }
 }
