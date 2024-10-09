@@ -542,12 +542,13 @@ window.onload = function() {
         document.getElementById("bookSelect").value = autoStartBook
     }
     else {
-        document.getElementById("chapterSelect").value = JSON.parse(localStorage.getItem(formattedDate)).get("chapter") || 1
-        document.getElementById("bookSelect").value = localStorage.getItem(formattedDate).get("book") || 1
+        document.getElementById("chapterSelect").value = JSON.parse(localStorage.getItem(formattedDate)).get("chapter") || 21
+        document.getElementById("bookSelect").value = JSON.parse(localStorage.getItem(formattedDate)).get("book") || 28
     }
 }
 
 function setVerseData(){
     let jsonData = {book: recentBook, chapter: recentChapter}
     localStorage.setItem(formattedDate, JSON.stringify(jsonData))
+    console.log(jsonData)
 }
