@@ -1,4 +1,6 @@
 createChapterSelect()
+let recentBook
+let recentChapter
 
 /*
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
@@ -66,6 +68,7 @@ function getDate() {
 document.getElementById("weeklyBread").addEventListener("click", function() {
     getFromAllVersesArray()
     retrieveData()
+    setVerseData()
 })
 
 document.getElementById("clearData").addEventListener("click", function() {
@@ -319,6 +322,8 @@ function getFromAllVersesArray() {
                 if (today.getDay() == 4) {
                     localStorage.setItem('previousBookIndex', bookIndexArray.pop())
                     localStorage.setItem('previousChapterIndex', chapterIndexArray.pop())
+                    recentBook = bookIndexArray.pop()
+                    recentChapter = bookIndexArray.pop()
                 }
                 return arr
             }
@@ -342,6 +347,8 @@ function getFromAllVersesArray() {
                 if (today.getDay() == 4) {
                     localStorage.setItem('previousBookIndex', bookIndexArray.pop())
                     localStorage.setItem('previousChapterIndex', chapterIndexArray.pop())
+                    recentBook = bookIndexArray.pop()
+                    recentChapter = bookIndexArray.pop()
                 }
                 return arr
             }
@@ -517,10 +524,10 @@ document.getElementById('inputDate').value = formattedDate;
 
 
 window.onload = function() {
-    let previousThursday = localStorage.getItem("previousThursday") | ""
+    let previousThursday = localStorage.getItem("previousThursday") || ""
     if (today.getDay() == 4 && previousThursday != today.getDate()) {
         let autoStartChapter = parseInt(localStorage.getItem("previousChapterIndex")) + 1
-        let autoStartBook = parseInt(localStorage.getItem("previousBookIndex")) | 1
+        let autoStartBook = parseInt(localStorage.getItem("previousBookIndex")) || 1
 
         if (autoStartChapter >= allVersesArray[autoStartBook].length) {
             autoStartChapter = 1
@@ -535,7 +542,12 @@ window.onload = function() {
         document.getElementById("bookSelect").value = autoStartBook
     }
     else {
-        document.getElementById("chapterSelect").value = localStorage.getItem("previousChapterIndex") || 1
-        document.getElementById("bookSelect").value = localStorage.getItem("previousBookIndex") || 1
+        document.getElementById("chapterSelect").value = JSON.parse(localStorage.getItem(formattedDate)).get("chapter") || 1
+        document.getElementById("bookSelect").value = localStorage.getItem(formattedDate).get("book") || 1
     }
+}
+
+function setVerseData(){
+    let jsonData = {book: recentBook, chapter: recentChapter}
+    localStorage.setItem(formattedDate, JSON.stringify(jsonData))
 }
