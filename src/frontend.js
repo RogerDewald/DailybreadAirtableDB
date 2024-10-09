@@ -542,8 +542,8 @@ window.onload = function() {
         document.getElementById("bookSelect").value = autoStartBook
     }
     else {
-        document.getElementById("chapterSelect").value = JSON.parse(localStorage.getItem(formattedDate)).get("chapter") || 21
-        document.getElementById("bookSelect").value = JSON.parse(localStorage.getItem(formattedDate)).get("book") || 28
+        document.getElementById("chapterSelect").value = JSON.parse(localStorage.getItem(formattedDate)).chapter || 21
+        document.getElementById("bookSelect").value = JSON.parse(localStorage.getItem(formattedDate)).book || 28
     }
 }
 
