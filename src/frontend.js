@@ -1,4 +1,5 @@
 createChapterSelect()
+const formattedDate = instantiateDate()
 
 /*
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
@@ -480,45 +481,15 @@ async function getDayIndex() {
 }
 */
 
-const today = new Date();
-
-// Calculate how many days we need to go back to reach the previous Thursday
-let daysBack;
-if (today.getDay() === 4) {
-    // If today is Thursday, go back one week (7 days)
-    daysBack = 7;
-} else {
-    // If today is not Thursday, go back to the Thursday from two weeks prior
-    const daysSinceThursday = (today.getDay() - 4 + 7) % 7;
-    daysBack = daysSinceThursday + 7; // Adding another 7 days for two weeks ago
-}
-
-// Set the date to the previous Thursday
-const lastThursday = new Date(today);
-lastThursday.setDate(today.getDate() - daysBack);
-
-// Format the date to YYYY-MM-DD for the date input
-const year = lastThursday.getFullYear();
-const month = String(lastThursday.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-const day = String(lastThursday.getDate()).padStart(2, '0');
-
-const intThursdayDate = (parseInt(year), parseInt(month), parseInt(day))
-
-const formattedDate = `${year}-${month}-${day}`;
-
-if (today.getDay() == 4) {
-    localStorage.setItem("previousThursday", today)
-}
 
 // Set the value of the date input
-document.getElementById('inputDate').value = formattedDate;
 
 
 window.onload = function() {
-    let previousThursday = localStorage.getItem("previousThursday") || ""
+    const theThursday = get2ThursdaysBack()
     if (today.getDay() == 4 && previousThursday != today.getDate()) {
-        let autoStartChapter = parseInt(localStorage.getItem("previousChapterIndex")) + 1
-        let autoStartBook = parseInt(localStorage.getItem("previousBookIndex")) || 1
+        let autoStartChapter = parseInt(JSON.parse(localStorage.getItem(theThursday)).chapter) + 1
+        let autoStartBook = parseInt(JSON.parse(localStorage.getItem(theThursday))) || 1
 
         if (autoStartChapter >= allVersesArray[autoStartBook].length) {
             autoStartChapter = 1
@@ -538,11 +509,51 @@ window.onload = function() {
     }
 }
 
-async function setVerseData(recentChapter, recentBook) {
+function setVerseData(recentChapter, recentBook) {
     let jsonData = { book: recentBook, chapter: recentChapter }
-    console.log(recentBook)
-    console.log(recentChapter)
     localStorage.setItem(formattedDate, JSON.stringify(jsonData))
-    console.log(localStorage.getItem(formattedDate))
-    console.log(jsonData)
+}
+
+function instantiateDate() {
+    const today = new Date();
+
+    // Calculate how many days we need to go back to reach the previous Thursday
+    let daysBack;
+    if (today.getDay() === 4) {
+        // If today is Thursday, go back one week (7 days)
+        daysBack = 7;
+    } else {
+        // If today is not Thursday, go back to the Thursday from two weeks prior
+        const daysSinceThursday = (today.getDay() - 4 + 7) % 7;
+        daysBack = daysSinceThursday + 7; // Adding another 7 days for two weeks ago
+    }
+
+    // Set the date to the previous Thursday
+    const lastThursday = new Date(today);
+    lastThursday.setDate(today.getDate() - daysBack);
+
+    // Format the date to YYYY-MM-DD for the date input
+    const year = lastThursday.getFullYear();
+    const month = String(lastThursday.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(lastThursday.getDate()).padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day}`;
+    document.getElementById('inputDate').value = formattedDate;
+    return formattedDate
+}
+
+function get2ThursdaysBack(){
+    const today = new Date();
+
+    let daysBack = 14
+    const lastThursday = new Date(today);
+    lastThursday.setDate(today.getDate() - daysBack);
+
+    // Format the date to YYYY-MM-DD for the date input
+    const year = lastThursday.getFullYear();
+    const month = String(lastThursday.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(lastThursday.getDate()).padStart(2, '0');
+
+    const newDate = `${year}-${month}-${day}`;
+    return newDate
 }
