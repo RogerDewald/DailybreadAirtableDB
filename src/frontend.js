@@ -487,9 +487,10 @@ async function getDayIndex() {
 
 window.onload = function() {
     const theThursday = get2ThursdaysBack()
-    if (today.getDay() == 4 && previousThursday != today.getDate()) {
+    const today = new Date()
+    if (today.getDate() == 4) {
         let autoStartChapter = parseInt(JSON.parse(localStorage.getItem(theThursday)).chapter) + 1
-        let autoStartBook = parseInt(JSON.parse(localStorage.getItem(theThursday))) || 1
+        let autoStartBook = parseInt(JSON.parse(localStorage.getItem(theThursday)).book) || 1
 
         if (autoStartChapter >= allVersesArray[autoStartBook].length) {
             autoStartChapter = 1
