@@ -538,7 +538,7 @@ window.onload = function() {
     }
 }
 
-async function setVerseData() {
+async function setVerseData(recentChapter, recentBook) {
     let jsonData = { book: recentBook, chapter: recentChapter }
     console.log(recentBook)
     console.log(recentChapter)
