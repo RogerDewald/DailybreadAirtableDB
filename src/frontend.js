@@ -324,6 +324,8 @@ function getFromAllVersesArray() {
                     localStorage.setItem('previousChapterIndex', chapterIndexArray.pop())
                     recentBook = bookIndexArray.pop()
                     recentChapter = bookIndexArray.pop()
+                    console.log(bookIndexArray)
+                    console.log(chapterIndexArray)
                 }
                 return arr
             }
