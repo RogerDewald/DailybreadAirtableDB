@@ -1,5 +1,6 @@
 createChapterSelect()
 const formattedDate = instantiateDate()
+const isToday = new Date()
 
 /*
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
@@ -317,7 +318,7 @@ function getFromAllVersesArray() {
             chapterIndexArray.push(j)
 
             if (count == chapterLimit) {
-                if (today.getDay() == 4) {
+                if (isToday.getDay() == 4) {
                     setVerseData(chapterIndexArray.pop(), bookIndexArray.pop())
                 }
                 return arr
@@ -339,7 +340,7 @@ function getFromAllVersesArray() {
             chapterIndexArray.push(j)
 
             if (count == chapterLimit) {
-                if (today.getDay() == 4) {
+                if (isToday.getDay() == 4) {
                     setVerseData(chapterIndexArray.pop(), bookIndexArray.pop())
                 }
                 return arr
