@@ -343,7 +343,7 @@ function getFromAllVersesArray() {
 
             if (count == chapterLimit) {
                 if (isToday.getDay() == 4) {
-                    setVerseData([chapterIndexArray[0], chapterIndexArray.pop(), bookIndexArray[0], bookIndexArray.pop()])
+                    setVerseData(chapterIndexArray[0], chapterIndexArray.pop(), bookIndexArray[0], bookIndexArray.pop())
                 }
                 return arr
             }
