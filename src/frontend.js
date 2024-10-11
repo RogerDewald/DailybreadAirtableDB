@@ -541,9 +541,9 @@ function get2ThursdaysBack() {
 
 function setBookAndChapter() {
     const theThursday = get2ThursdaysBack()
-    let json = JSON.parse(localStorage.getItem(formattedDate))
+    let json = JSON.parse(localStorage.getItem(formattedDate)) || {}
     if (isToday.getDate() == 4 && !json.hasOwnProperty(formattedToday)) {
-        let theThursdayJson = JSON.parse(localStorage.getItem(theThursday))
+        let theThursdayJson = JSON.parse(localStorage.getItem(theThursday)) || {}
         let autoStartChapter = parseInt(theThursdayJson.endchapter || 1) + 1
         let autoStartBook = parseInt(theThursdayJson.endbook || 1)
 
