@@ -343,7 +343,7 @@ function getFromAllVersesArray() {
 
             if (count == chapterLimit) {
                 if (isToday.getDay() == 4) {
-                    setVerseData(chapterIndexArray.pop(), bookIndexArray.pop())
+                    setVerseData([chapterIndexArray[0], chapterIndexArray.pop(), bookIndexArray[0], bookIndexArray.pop()])
                 }
                 return arr
             }
@@ -485,8 +485,13 @@ async function getDayIndex() {
 */
 
 
-function setVerseData(recentChapter, recentBook) {
-    let jsonData = { book: recentBook, chapter: recentChapter }
+function setVerseData(chapterStart, chapterEnd, bookStart, bookEnd) {
+    let jsonData = {
+        bookstart: bookStart,
+        bookend: bookEnd,
+        chapterstart: chapterStart,
+        chapterend: chapterEnd
+    }
     localStorage.setItem(formattedDate, JSON.stringify(jsonData))
 }
 
@@ -538,8 +543,9 @@ function setBookAndChapter() {
     const theThursday = get2ThursdaysBack()
     let json = JSON.parse(localStorage.getItem(formattedDate))
     if (isToday.getDate() == 4 && !json.hasOwnProperty(formattedToday)) {
-        let autoStartChapter = parseInt(JSON.parse(localStorage.getItem(theThursday)).chapter || 1) + 1
-        let autoStartBook = parseInt(JSON.parse(localStorage.getItem(theThursday)).book || 1)
+        let theThursdayJson = JSON.parse(localStorage.getItem(theThursday))
+        let autoStartChapter = parseInt(theThursdayJson.endchapter || 1) + 1
+        let autoStartBook = parseInt(theThursdayJson.endbook || 1)
 
         if (autoStartChapter >= allVersesArray[autoStartBook].length) {
             autoStartChapter = 1
@@ -554,8 +560,8 @@ function setBookAndChapter() {
         document.getElementById("bookSelect").value = autoStartBook
     }
     else {
-        document.getElementById("chapterSelect").value = json.chapter || 21
-        document.getElementById("bookSelect").value = json.book || 28
+        document.getElementById("chapterSelect").value = json.startchapter || 21
+        document.getElementById("bookSelect").value = json.startbook || 22
     }
 }
 
