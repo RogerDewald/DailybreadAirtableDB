@@ -319,7 +319,7 @@ function getFromAllVersesArray() {
 
             if (count == chapterLimit) {
                 if (isToday.getDay() == 4) {
-                    setVerseData(chapterIndexArray.pop(), bookIndexArray.pop())
+                    setVerseData([chapterIndexArray[0], chapterIndexArray.pop()], [bookIndexArray[0], bookIndexArray.pop()])
                 }
                 return arr
             }
@@ -490,8 +490,8 @@ window.onload = function() {
     const theThursday = get2ThursdaysBack()
     const today = new Date()
     if (today.getDate() == 4) {
-        let autoStartChapter = parseInt(JSON.parse(localStorage.getItem(theThursday)).chapter) + 1
-        let autoStartBook = parseInt(JSON.parse(localStorage.getItem(theThursday)).book) || 1
+        let autoStartChapter = parseInt(JSON.parse(localStorage.getItem(theThursday)).chapter || 1) + 1
+        let autoStartBook = parseInt(JSON.parse(localStorage.getItem(theThursday)).book || 1)
 
         if (autoStartChapter >= allVersesArray[autoStartBook].length) {
             autoStartChapter = 1
