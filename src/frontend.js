@@ -1,6 +1,8 @@
 createChapterSelect()
-const formattedDate = instantiateDate()
 const isToday = new Date()
+const formattedDate = instantiateDate()
+const formattedToday = instantiateToday()
+setBookAndChapter()
 
 /*
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
@@ -483,34 +485,6 @@ async function getDayIndex() {
 */
 
 
-// Set the value of the date input
-
-
-window.onload = function() {
-    const theThursday = get2ThursdaysBack()
-    const today = new Date()
-    if (today.getDate() == 4) {
-        let autoStartChapter = parseInt(JSON.parse(localStorage.getItem(theThursday)).chapter || 1) + 1
-        let autoStartBook = parseInt(JSON.parse(localStorage.getItem(theThursday)).book || 1)
-
-        if (autoStartChapter >= allVersesArray[autoStartBook].length) {
-            autoStartChapter = 1
-            if (autoStartBook == 12) {
-                autoStartBook = 1
-            }
-            else {
-                autoStartBook += 1
-            }
-        }
-        document.getElementById("chapterSelect").value = autoStartBook
-        document.getElementById("bookSelect").value = autoStartBook
-    }
-    else {
-        document.getElementById("chapterSelect").value = JSON.parse(localStorage.getItem(formattedDate)).chapter || 21
-        document.getElementById("bookSelect").value = JSON.parse(localStorage.getItem(formattedDate)).book || 28
-    }
-}
-
 function setVerseData(recentChapter, recentBook) {
     let jsonData = { book: recentBook, chapter: recentChapter }
     localStorage.setItem(formattedDate, JSON.stringify(jsonData))
@@ -544,7 +518,7 @@ function instantiateDate() {
     return formattedDate
 }
 
-function get2ThursdaysBack(){
+function get2ThursdaysBack() {
     const today = new Date();
 
     let daysBack = 14
@@ -558,4 +532,37 @@ function get2ThursdaysBack(){
 
     const newDate = `${year}-${month}-${day}`;
     return newDate
+}
+
+function setBookAndChapter() {
+    const theThursday = get2ThursdaysBack()
+    let json = JSON.parse(localStorage.getItem(formattedDate))
+    if (isToday.getDate() == 4 && !json.hasOwnProperty(formattedToday)) {
+        let autoStartChapter = parseInt(JSON.parse(localStorage.getItem(theThursday)).chapter || 1) + 1
+        let autoStartBook = parseInt(JSON.parse(localStorage.getItem(theThursday)).book || 1)
+
+        if (autoStartChapter >= allVersesArray[autoStartBook].length) {
+            autoStartChapter = 1
+            if (autoStartBook == 12) {
+                autoStartBook = 1
+            }
+            else {
+                autoStartBook += 1
+            }
+        }
+        document.getElementById("chapterSelect").value = autoStartBook
+        document.getElementById("bookSelect").value = autoStartBook
+    }
+    else {
+        document.getElementById("chapterSelect").value = json.chapter || 21
+        document.getElementById("bookSelect").value = json.book || 28
+    }
+}
+
+function instantiateToday() {
+    const year = isToday.getFullYear();
+    const month = String(isToday.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(isToday.getDate()).padStart(2, '0');
+    const thedate = `${year}-${month}-${day}`;
+    return thedate
 }
