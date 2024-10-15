@@ -540,9 +540,10 @@ function get2ThursdaysBack() {
 }
 
 function setBookAndChapter() {
-    const theThursday = get2ThursdaysBack()
     let json = JSON.parse(localStorage.getItem(formattedDate)) || {}
+    console.log(json)
     if (isToday.getDate() == 4 && !json.hasOwnProperty(formattedToday)) {
+        const theThursday = get2ThursdaysBack()
         let theThursdayJson = JSON.parse(localStorage.getItem(theThursday)) || {}
         let autoStartChapter = parseInt(theThursdayJson.endchapter || 1) + 1
         let autoStartBook = parseInt(theThursdayJson.endbook || 1)
@@ -562,6 +563,8 @@ function setBookAndChapter() {
     else {
         document.getElementById("chapterSelect").value = json.startchapter || 21
         document.getElementById("bookSelect").value = json.startbook || 22
+        console.log(json.startchapter || 21)
+        console.log(json.startbook || 22)
     }
 }
 
