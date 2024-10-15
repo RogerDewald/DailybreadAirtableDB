@@ -542,6 +542,7 @@ function get2ThursdaysBack() {
 function setBookAndChapter() {
     let json = JSON.parse(localStorage.getItem(formattedDate)) || {}
     console.log(json)
+    console.log(JSON.parse(localStorage.getItem(formattedDate)))
     if (isToday.getDate() == 4 && !json.hasOwnProperty(formattedToday)) {
         const theThursday = get2ThursdaysBack()
         let theThursdayJson = JSON.parse(localStorage.getItem(theThursday)) || {}
