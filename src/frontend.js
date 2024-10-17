@@ -518,7 +518,7 @@ document.getElementById('inputDate').value = formattedDate;
 
 window.onload = function() {
     let previousThursday = localStorage.getItem("previousThursday") | ""
-    if (today.getDay() == 4 && previousThursday != today) {
+    if (today.getDay() == 4 && previousThursday != today.getDate()) {
         let autoStartChapter = parseInt(localStorage.getItem("previousChapterIndex")) + 1
         let autoStartBook = parseInt(localStorage.getItem("previousBookIndex")) | 1
 
