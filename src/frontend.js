@@ -64,9 +64,8 @@ function getDate() {
     }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
-    //retrieveData()
+    // retrieveData()
     let yo = getFromAllVersesArray()
-    localStorage.setItem("date", "")
 })
 
 document.getElementById("clearData").addEventListener("click", function() {
@@ -320,6 +319,8 @@ function getFromAllVersesArray() {
                 if (today.getDay() == 4) {
                     localStorage.setItem('previousBookIndex', bookIndexArray.pop())
                     localStorage.setItem('previousChapterIndex', chapterIndexArray.pop())
+                    localStorage.setItem('bookIndex', bookIndexArray.pop())
+                    localStorage.setItem('chapterIndex', chapterIndexArray.pop())
                 }
                 else {
                     localStorage.setItem('bookIndex', bookIndexArray.pop())
@@ -521,7 +522,7 @@ const formattedDate = `${year}-${month}-${day}`;
 document.getElementById('inputDate').value = formattedDate;
 
 let autoStartChapter = parseInt(localStorage.getItem("chapterIndex")) + 1
-let autoStartBook = parseInt(localStorage.getItem("bookIndex"))
+let autoStartBook = parseInt(localStorage.getItem("bookIndex")) | 1
 
 if (autoStartChapter >= allVersesArray[autoStartBook].length) {
     autoStartChapter = 1
