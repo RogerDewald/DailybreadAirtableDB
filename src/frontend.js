@@ -120,7 +120,6 @@ async function uploadData() {
         })
         .catch(error => { console.error("error:", error) })
 
-    loadingOn()
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
     const dateToFilter = getDate(); // Replace with your desired date
