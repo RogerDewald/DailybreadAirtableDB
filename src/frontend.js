@@ -1,7 +1,5 @@
 createChapterSelect()
-const isToday = new Date()
-const formattedDate = instantiateDate()
-const formattedToday = instantiateToday()
+
 setBookAndChapter()
 
 /*
@@ -207,6 +205,8 @@ async function retrieveData() {
     // Construct the URL to fetch data from Airtable
     const url = `https://api.airtable.com/v0/${baseId}/${tableName}?filterByFormula=${encodeURIComponent(filterFormula)}`;
 
+    localStorage.setItem("date", dateToFilter)
+
     // Set up the request headers
     let headers = {
         Authorization: `Bearer ${howdy}`,
@@ -300,6 +300,10 @@ function getVerseCount(array) {
 function getFromAllVersesArray() {
     const startingChapter = parseInt(document.getElementById("chapterSelect").value)
     const startingBook = parseInt(document.getElementById("bookSelect").value)
+
+    localStorage.setItem("chapter", startingChapter)
+    localStorage.setItem("book", startingBook)
+
     const chapterLimit = 8
     let j = startingChapter
 
@@ -319,9 +323,6 @@ function getFromAllVersesArray() {
             chapterIndexArray.push(j)
 
             if (count == chapterLimit) {
-                if (isToday.getDay() == 4) {
-                    setVerseData(chapterIndexArray[0], chapterIndexArray.pop(), bookIndexArray[0], bookIndexArray.pop())
-                }
                 return arr
             }
         }
@@ -341,9 +342,6 @@ function getFromAllVersesArray() {
             chapterIndexArray.push(j)
 
             if (count == chapterLimit) {
-                if (isToday.getDay() == 4) {
-                    setVerseData(chapterIndexArray[0], chapterIndexArray.pop(), bookIndexArray[0], bookIndexArray.pop())
-                }
                 return arr
             }
         }
@@ -461,117 +459,10 @@ function findSemester() {
 
 }
 
-/*
-async function postDayIndex(chapterIndex, verseIndex) {
-    try {
-        await addDoc(collection(db, "dayIndex"), { chapterIndex, verseIndex })
-        alert("Firebase Works");
-    } catch (error) {
-        console.error("Firestore POST Error", error);
-    }
-}
-
-async function getDayIndex() {
-    try {
-        const indices = await getDocs(collection(db, "dayIndex"))
-        const recent = indices.pop()
-        return [recent.chapterIndex, recent.verseIndex]
-    }
-    catch (error) {
-        console.error("Firestore GET Error", error);
-    }
-}
-*/
-
-
-function setVerseData(chapterStart, chapterEnd, bookStart, bookEnd) {
-    let jsonData = {
-        bookstart: bookStart,
-        bookend: bookEnd,
-        chapterstart: chapterStart,
-        chapterend: chapterEnd
-    }
-    localStorage.setItem(formattedDate, JSON.stringify(jsonData))
-}
-
-function instantiateDate() {
-    const today = new Date();
-
-    // Calculate how many days we need to go back to reach the previous Thursday
-    let daysBack;
-    if (today.getDay() === 4) {
-        // If today is Thursday, go back one week (7 days)
-        daysBack = 7;
-    } else {
-        // If today is not Thursday, go back to the Thursday from two weeks prior
-        const daysSinceThursday = (today.getDay() - 4 + 7) % 7;
-        daysBack = daysSinceThursday + 7; // Adding another 7 days for two weeks ago
-    }
-
-    // Set the date to the previous Thursday
-    const lastThursday = new Date(today);
-    lastThursday.setDate(today.getDate() - daysBack);
-
-    // Format the date to YYYY-MM-DD for the date input
-    const year = lastThursday.getFullYear();
-    const month = String(lastThursday.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-    const day = String(lastThursday.getDate()).padStart(2, '0');
-
-    const formattedDate = `${year}-${month}-${day}`;
-    document.getElementById('inputDate').value = formattedDate;
-    return formattedDate
-}
-
-function get2ThursdaysBack() {
-    const today = new Date();
-
-    let daysBack = 14
-    const lastThursday = new Date(today);
-    lastThursday.setDate(today.getDate() - daysBack);
-
-    // Format the date to YYYY-MM-DD for the date input
-    const year = lastThursday.getFullYear();
-    const month = String(lastThursday.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-    const day = String(lastThursday.getDate()).padStart(2, '0');
-
-    const newDate = `${year}-${month}-${day}`;
-    return newDate
-}
-
 function setBookAndChapter() {
-    let json = JSON.parse(localStorage.getItem(formattedDate)) || {}
-    console.log(json)
-    console.log(JSON.parse(localStorage.getItem(formattedDate)))
-    if (isToday.getDate() == 4 && !json.hasOwnProperty(formattedToday)) {
-        const theThursday = get2ThursdaysBack()
-        let theThursdayJson = JSON.parse(localStorage.getItem(theThursday)) || {}
-        let autoStartChapter = parseInt(theThursdayJson.endchapter || 1) + 1
-        let autoStartBook = parseInt(theThursdayJson.endbook || 1)
-
-        if (autoStartChapter >= allVersesArray[autoStartBook].length) {
-            autoStartChapter = 1
-            if (autoStartBook == 12) {
-                autoStartBook = 1
-            }
-            else {
-                autoStartBook += 1
-            }
-        }
-        document.getElementById("chapterSelect").value = autoStartBook
-        document.getElementById("bookSelect").value = autoStartBook
+    if (localStorage.getItem("book") && localStorage.getItem("chapter") && localStorage.getItem("date")) {
+        document.getElementById("bookSelect").value = localStorage.getItem("book")
+        document.getElementbyId("chapterSelect").value = localStorage.getItem("chapter")
+        document.getElementById("inputDate").value = localStorage.getItem("date")
     }
-    else {
-        document.getElementById("chapterSelect").value = json.startchapter || 21
-        document.getElementById("bookSelect").value = json.startbook || 22
-        console.log(json.startchapter || 21)
-        console.log(json.startbook || 22)
-    }
-}
-
-function instantiateToday() {
-    const year = isToday.getFullYear();
-    const month = String(isToday.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-    const day = String(isToday.getDate()).padStart(2, '0');
-    const thedate = `${year}-${month}-${day}`;
-    return thedate
 }
