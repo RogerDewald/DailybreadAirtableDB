@@ -462,7 +462,7 @@ function findSemester() {
 function setBookAndChapter() {
     if (localStorage.getItem("book") && localStorage.getItem("chapter") && localStorage.getItem("date")) {
         document.getElementById("bookSelect").value = localStorage.getItem("book")
-        document.getElementbyId("chapterSelect").value = localStorage.getItem("chapter")
+        document.getElementById("chapterSelect").value = localStorage.getItem("chapter")
         document.getElementById("inputDate").value = localStorage.getItem("date")
     }
 }
