@@ -467,17 +467,3 @@ function setBookAndChapter() {
         document.getElementById("inputDate").value = localStorage.getItem("date")
     }
 }
-
-async function experimental () {
-    const yo = await fetch("https://dailybread-airtable-i8pa9ysge-daniel-dewalds-projects.vercel.app/api/receive", {
-        method: "POST",
-        headers: {
-            "Content-Type": "text/plain"
-        },
-        body: "yo"
-    })
-
-    console.log(yo)
-    //const howdy = await yo.text()
-    //console.log(howdy)
-}
