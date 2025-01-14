@@ -12,7 +12,7 @@ module.exports = (req, res) => {
             res.status(200).send("CorrectPassword")
         }
         else {
-            res.status(401).send("WrongPassword")
+            res.status(402).send("WrongPassword")
         }
     }
     else {
