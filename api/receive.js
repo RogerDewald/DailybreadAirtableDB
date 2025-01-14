@@ -1,6 +1,6 @@
 module.exports = (req, res) => {
-    // res.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
-    // res.setHeader('Access-Control-Allow-Methods', 'GET');
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
 
     const string = req.body
     res.status(200).send(string)

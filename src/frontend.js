@@ -66,8 +66,9 @@ function getDate() {
     }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
-    getFromAllVersesArray()
-    retrieveData()
+    //getFromAllVersesArray()
+    //retrieveData()
+    experimental()
 })
 
 document.getElementById("clearData").addEventListener("click", function() {
@@ -465,4 +466,17 @@ function setBookAndChapter() {
         document.getElementById("chapterSelect").value = localStorage.getItem("chapter")
         document.getElementById("inputDate").value = localStorage.getItem("date")
     }
+}
+
+async function experimental () {
+    const yo = await fetch("https://dailybread-airtable-6xk92dy0m-daniel-dewalds-projects.vercel.app/api/receive", {
+        method: "POST",
+        headers: {
+            "Content-Type": "text/plain"
+        },
+        body: "string"
+    })
+
+    const howdy = await yo.text()
+    console.log(howdy)
 }
