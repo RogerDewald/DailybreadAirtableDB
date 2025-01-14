@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     }
 
     if (req.method === 'POST') {
-        if (req.body === process.env.PASSWORD) {
+        if (req.body == process.env.PASSWORD) {
             res.status(200).send("CorrectPassword")
         }
         else {
