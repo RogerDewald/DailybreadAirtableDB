@@ -7,7 +7,14 @@ module.exports = (req, res) => {
         return res.status(200).end();
     }
 
-    const string = req.body
-    res.status(200).send(string)
+    if (req.method === 'POST') {
+        const string = req.body
+        res.status(200).send(string)
+    }
+    else {
+        res.status(400).json({
+            error: `Method ${req.method} not allowed`
+        })
+    }
     // res.status(200).send(process.env.AIRTABLE_API_TOKEN_RECEIVE);
 };
