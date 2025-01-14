@@ -469,7 +469,7 @@ function setBookAndChapter() {
 }
 
 async function experimental () {
-    const yo = await fetch("https://dailybread-airtable-qinth8nvm-daniel-dewalds-projects.vercel.app/api/receive", {
+    const yo = await fetch("https://dailybread-airtable-p3ydjcoow-daniel-dewalds-projects.vercel.app/api/receive", {
         method: "POST",
         headers: {
             "Content-Type": "text/plain"
