@@ -106,7 +106,7 @@ document.getElementById("totalVerses").addEventListener("click", function() {
 
 async function uploadData() {
     let apiKey = ""
-    await fetch("/api/upload")
+    await fetch("https://ccodailybread.vercel.app/api/upload")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -181,7 +181,7 @@ async function uploadData() {
 async function retrieveData() {
     loadingOn()
     let howdy = ""
-    await fetch("/api/receive")
+    await fetch("https://ccodailybread.vercel.app/api/receive")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
