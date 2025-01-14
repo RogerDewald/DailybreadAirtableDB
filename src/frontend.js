@@ -66,9 +66,8 @@ function getDate() {
     }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
-    //getFromAllVersesArray()
-    //retrieveData()
-    experimental()
+    getFromAllVersesArray()
+    retrieveData()
 })
 
 document.getElementById("clearData").addEventListener("click", function() {
@@ -182,7 +181,7 @@ async function uploadData() {
 async function retrieveData() {
     loadingOn()
     let howdy = ""
-    await fetch("https://ccodailybread.vercel.app/api/receive")
+    await fetch("/api/receive")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
