@@ -304,7 +304,10 @@ function getFromAllVersesArray() {
     localStorage.setItem("chapter", startingChapter)
     localStorage.setItem("book", startingBook)
 
-    const chapterLimit = 8
+    const chapterLimit = document.getElementById("chapter-limit").value
+
+    localStorage.setItem("limit", chapterLimit)
+
     let j = startingChapter
 
     let arr = []
@@ -460,9 +463,10 @@ function findSemester() {
 }
 
 function setBookAndChapter() {
-    if (localStorage.getItem("book") && localStorage.getItem("chapter") && localStorage.getItem("date")) {
+    if (localStorage.getItem("book") && localStorage.getItem("chapter") && localStorage.getItem("date") && localStorage.getItem("limit")) {
         document.getElementById("bookSelect").value = localStorage.getItem("book")
         document.getElementById("chapterSelect").value = localStorage.getItem("chapter")
         document.getElementById("inputDate").value = localStorage.getItem("date")
+        document.getElementById("chapter-limit").value = localStorage.getItem("limit")
     }
 }
