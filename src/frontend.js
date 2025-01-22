@@ -270,6 +270,11 @@ function getTotalCount() {
 function getVerseCount(array) {
     let verseArray = getFromAllVersesArray()
     let count = 0
+    extraday = document.getElementById("extra-day").value
+    if (document.getElementById("chapter-limit").value == 8) {
+        count += parseInt(verseArray[extraday])
+        verseArray.splice(extraday, extraday)
+    }
     for (let i = 0; i < array.length; i++) {
         if (array[i] == "Thursday") {
             count += parseInt(verseArray[0])
