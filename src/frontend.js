@@ -2,29 +2,6 @@ createChapterSelect()
 
 setBookAndChapter()
 
-/*
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
-
-let app = ""
-let analytics = ""
-let db = ""
-let firebaseConfig = ""
-
-
-async function firebaseInit() {
-    const response = await fetch("/api/getFirebaseAPI")
-    firebaseConfig = response.json()
-    console.log(firebaseConfig)
-    app = initializeApp(firebaseConfig);
-    analytics = getAnalytics(app);
-    db = getFirestore(app)
-}
-window.addEventListener("load", firebaseInit())
-*/
-
-
-
 const allVersesArray = [[],
 ('Matthew', 28, [[], 25, 23, 17, 25, 48, 34, 29, 34, 38, 42, 30, 50, 58, 36, 39, 28, 27, 35, 30, 34, 46, 46, 39, 51, 46, 75, 66, 20]),
 ('Mark', 16, [[], 45, 28, 35, 41, 43, 56, 37, 38, 50, 52, 33, 44, 37, 72, 47, 20]),
@@ -106,7 +83,7 @@ document.getElementById("totalVerses").addEventListener("click", function() {
 
 async function uploadData() {
     let apiKey = ""
-    await fetch("https://ccodailybread.vercel.app/api/upload")
+    await fetch("/api/upload")
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -268,14 +245,16 @@ function getTotalCount() {
 }
 
 function getVerseCount(array) {
+    console.log(array)
     let verseArray = getFromAllVersesArray()
-    console.log(verseArray)
     let count = 0
     const extraday = document.getElementById("extra-day").value
+    localStorage.setItem("extraday", extraday)
     if (document.getElementById("chapter-limit").value == 8) {
-        count += parseInt(verseArray[extraday])
-        verseArray.splice(extraday, extraday)
-        console.log(verseArray)
+        if (array.includes(dayMap.get(extraday))) {
+            count += parseInt(verseArray[extraday])
+        }
+        verseArray.splice(extraday, 1)
     }
     for (let i = 0; i < array.length; i++) {
         if (array[i] == "Thursday") {
@@ -299,7 +278,6 @@ function getVerseCount(array) {
         if (array[i] == "Wednesday") {
             count += parseInt(verseArray[6])
         }
-        console.log(count)
     }
     return count
 }
@@ -470,10 +448,21 @@ function findSemester() {
 }
 
 function setBookAndChapter() {
-    if (localStorage.getItem("book") && localStorage.getItem("chapter") && localStorage.getItem("date") && localStorage.getItem("limit")) {
+    if (localStorage.getItem("book") && localStorage.getItem("chapter") && localStorage.getItem("date") && localStorage.getItem("limit") && localStorage.getItem("extraday")) {
         document.getElementById("bookSelect").value = localStorage.getItem("book")
         document.getElementById("chapterSelect").value = localStorage.getItem("chapter")
         document.getElementById("inputDate").value = localStorage.getItem("date")
         document.getElementById("chapter-limit").value = localStorage.getItem("limit")
+        document.getElementById("extra-day").value = localStorage.getItem("extraday")
     }
 }
+
+let dayMap = new Map();
+dayMap.set("1", "Thursday")
+dayMap.set("2", "Friday")
+dayMap.set("3", "Saturday")
+dayMap.set("4", "Sunday")
+dayMap.set("5", "Monday")
+dayMap.set("6", "Tuesday")
+dayMap.set("7", "Wednesday")
+
