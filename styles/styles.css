@@ -42,7 +42,7 @@ html {
     justify-content: center;
 }
 
-#options-set{
+.options-set{
     display: flex;
     align-items: center;
     padding: 0px;

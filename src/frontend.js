@@ -401,14 +401,11 @@ async function authorize() {
         alert("Please insert a name")
     }
 
-    //let nameAuthorization = ""
     const password = document.getElementById("textInput").value
 
     const promise = await fetch(`https://ccodailybread.vercel.app/api/nameid?p=${password}`)
     const promise2 = await promise.text()
-    console.log(promise2)
     const ok = parseInt(promise2)
-    console.log(ok)
 
     if (!ok) {
         alert("You are not authorized to upload")
@@ -416,25 +413,6 @@ async function authorize() {
     else {
         uploadData()
     }
-
-    //await fetch("https://ccodailybread.vercel.app/api/nameid")
-    //    .then(response => {
-    //        if (!response.ok) {
-    //            throw new Error('Network response was not ok');
-    //        }
-    //        return response.text()
-    //    })
-    //    .then(data => {
-    //        nameAuthorization = data
-    //        if (document.getElementById("textInput").value == nameAuthorization) {
-    //            uploadData()
-    //        }
-    //        else {
-    //            alert("You are not authorized to upload")
-    //        }
-    //    })
-    //    .catch(error => { console.error("error:", error) })
-
 }
 
 function loadingOn() {
@@ -448,7 +426,7 @@ async function calculateAllVerses() {
     loadingOn()
     let apiKey = ""
     try {
-        const apiKeyHeaders = await fetch("/api/receive")
+        const apiKeyHeaders = await fetch("https://ccodailybread.vercel.app/api/receive")
         apiKey = await apiKeyHeaders.text()
     }
     catch {
@@ -517,3 +495,11 @@ dayMap.set("5", "Monday")
 dayMap.set("6", "Tuesday")
 dayMap.set("7", "Wednesday")
 
+document.getElementById("chapter-limit").addEventListener("change", () => {
+    if (document.getElementById("chapter-limit").value == 7) {
+        document.getElementById("bad-choice").style.display = "none"
+    }
+    else {
+        document.getElementById("bad-choice").style.display = "flex"
+    }
+})
