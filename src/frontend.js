@@ -43,7 +43,7 @@ function getDate() {
     }
 }
 document.getElementById("weeklyBread").addEventListener("click", function() {
-    getFromAllVersesArray()
+    //getFromAllVersesArray()
     retrieveData()
 })
 
@@ -82,18 +82,20 @@ document.getElementById("totalVerses").addEventListener("click", function() {
 })
 
 async function uploadData() {
-    let apiKey = ""
-    await fetch("/api/upload")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text()
-        })
-        .then(data => {
-            apiKey = data
-        })
-        .catch(error => { console.error("error:", error) })
+    const promise = await fetch("https://ccodailybread.vercel.app/api/upload")
+    const apiKey = await promise.text()
+
+    //await fetch("/api/upload")
+    //    .then(response => {
+    //        if (!response.ok) {
+    //            throw new Error('Network response was not ok');
+    //        }
+    //        return response.text()
+    //    })
+    //    .then(data => {
+    //        apiKey = data
+    //    })
+    //    .catch(error => { console.error("error:", error) })
 
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
@@ -110,65 +112,100 @@ async function uploadData() {
         'Content-type': 'application/json',
     };
 
+    let returnArray = []
 
-    fetch(url, { headers })
-        .then(response => response.json())
-        .then(data => {
-            let verseCount = 0
-            for (let i = 0; i < data.records.length; i++) {
 
-                if (data.records[i].fields["I completed every chapter this week"] == true) {
-                    verseCount = getTotalCount()
-                }
-                else {
-                    verseCount = getVerseCount(data.records[i].fields["Days reporting"])
-                }
+    const promise2 = await fetch(url, { headers })
+    const data = await promise2.json()
+    let verseCount = 0
+    for (let i = 0; i < data.records.length; i++) {
 
-                const recordIdToUpdate = data.records[i].id;
-                const updateUrl = `https://api.airtable.com/v0/${baseId}/${tableName}/${recordIdToUpdate}`;
+        if (data.records[i].fields["I completed every chapter this week"] == true) {
+            verseCount = getTotalCount()
+        }
+        else {
+            verseCount = getVerseCount(data.records[i].fields["Days reporting"])
+        }
 
-                const updatedRecord = {
-                    fields: {
-                        "Verse Count": verseCount,
-                    },
+        const recordIdToUpdate = data.records[i].id;
+        const updatedRecord = {
+            id: recordIdToUpdate,
+            fields: {
+                "Verse Count": verseCount,
+            },
 
-                };
+        };
+        returnArray.push(updatedRecord)
+    }
+    const updateUrl = `https://api.airtable.com/v0/${baseId}/${tableName}`;
 
-                fetch(updateUrl, {
-                    method: 'PATCH',
-                    headers,
-                    body: JSON.stringify(updatedRecord),
-                })
-                    .then(response => response.json())
-                    .then(() => {
-                        loadingOff()
-                        alert("It is finished")
-                    })
-                    .catch(error => {
-                        console.error('Error updating record:', error);
-                    });
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    await fetch(updateUrl, {
+        method: 'PATCH',
+        headers,
+        body: JSON.stringify({ records: returnArray }),
+    })
+    loadingOff()
+    alert("It is finished")
+
+    //fetch(url, { headers })
+    //    .then(response => response.json())
+    //    .then(data => {
+    //        let verseCount = 0
+    //        for (let i = 0; i < data.records.length; i++) {
+
+    //            if (data.records[i].fields["I completed every chapter this week"] == true) {
+    //                verseCount = getTotalCount()
+    //            }
+    //            else {
+    //                verseCount = getVerseCount(data.records[i].fields["Days reporting"])
+    //            }
+
+    //            const recordIdToUpdate = data.records[i].id;
+    //            const updateUrl = `https://api.airtable.com/v0/${baseId}/${tableName}/${recordIdToUpdate}`;
+
+    //            const updatedRecord = {
+    //                fields: {
+    //                    "Verse Count": verseCount,
+    //                },
+
+    //            };
+
+    //            fetch(updateUrl, {
+    //                method: 'PATCH',
+    //                headers,
+    //                body: JSON.stringify(updatedRecord),
+    //            })
+    //                .then(response => response.json())
+    //                .then(() => {
+    //                    loadingOff()
+    //                    alert("It is finished")
+    //                })
+    //                .catch(error => {
+    //                    console.error('Error updating record:', error);
+    //                });
+    //        }
+    //    })
+    //    .catch(error => {
+    //        console.error('Error:', error);
+    //    });
 }
 
 
 async function retrieveData() {
     loadingOn()
-    let howdy = ""
-    await fetch("/api/receive")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text()
-        })
-        .then(apiData => {
-            howdy = apiData
-        })
-        .catch(error => { console.error("error:", error) })
+    const howdy1 = await fetch("https://ccodailybread.vercel.app/api/receive")
+    const howdy = await howdy1.text()
+    //await fetch("/api/receive")
+    //    .then(response => {
+    //        if (!response.ok) {
+    //            throw new Error('Network response was not ok');
+    //        }
+    //        return response.text()
+    //    })
+    //    .then(apiData => {
+    //        howdy = apiData
+    //    })
+    //    .catch(error => { console.error("error:", error) })
 
     const baseId = 'appV7WLGs7utmV0m8';
     const tableName = 'tblrrXdYBMFIvYPlE'; // Replace with your table name
@@ -245,7 +282,6 @@ function getTotalCount() {
 }
 
 function getVerseCount(array) {
-    console.log(array)
     let verseArray = getFromAllVersesArray()
     let count = 0
     const extraday = document.getElementById("extra-day").value
@@ -361,29 +397,44 @@ function closePopup() {
 }
 
 async function authorize() {
-    let nameAuthorization = ""
-
-    await fetch("/api/nameid")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text()
-        })
-        .then(data => {
-            nameAuthorization = data
-            if (document.getElementById("textInput").value == nameAuthorization) {
-                uploadData()
-            }
-            else {
-                alert("You are not authorized to upload")
-            }
-        })
-        .catch(error => { console.error("error:", error) })
-
     if (!document.getElementById("textInput").value) {
         alert("Please insert a name")
     }
+
+    //let nameAuthorization = ""
+    const password = document.getElementById("textInput").value
+
+    const promise = await fetch(`https://ccodailybread.vercel.app/api/nameid?p=${password}`)
+    const promise2 = await promise.text()
+    console.log(promise2)
+    const ok = parseInt(promise2)
+    console.log(ok)
+
+    if (!ok) {
+        alert("You are not authorized to upload")
+    }
+    else {
+        uploadData()
+    }
+
+    //await fetch("https://ccodailybread.vercel.app/api/nameid")
+    //    .then(response => {
+    //        if (!response.ok) {
+    //            throw new Error('Network response was not ok');
+    //        }
+    //        return response.text()
+    //    })
+    //    .then(data => {
+    //        nameAuthorization = data
+    //        if (document.getElementById("textInput").value == nameAuthorization) {
+    //            uploadData()
+    //        }
+    //        else {
+    //            alert("You are not authorized to upload")
+    //        }
+    //    })
+    //    .catch(error => { console.error("error:", error) })
+
 }
 
 function loadingOn() {
